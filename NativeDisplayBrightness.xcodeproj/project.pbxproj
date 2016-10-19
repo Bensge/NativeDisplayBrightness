@@ -25,6 +25,8 @@
 		9DBE37601DB7996100ABE422 /* DDC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDC.m; sourceTree = "<group>"; };
 		9DBE37611DB7996100ABE422 /* DDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDC.h; sourceTree = "<group>"; };
 		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
+		9DBE37641DB7A87200ABE422 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,8 @@
 				9DBE37571DB7990900ABE422 /* MainMenu.xib */,
 				9DBE375A1DB7990900ABE422 /* Info.plist */,
 				9DBE37601DB7996100ABE422 /* DDC.m */,
+				9DBE37641DB7A87200ABE422 /* Readme.md */,
+				9DBE37661DB7A9D600ABE422 /* License.txt */,
 				9DBE37611DB7996100ABE422 /* DDC.h */,
 				9DBE37521DB7990900ABE422 /* Supporting Files */,
 				9DBE37631DB79A4000ABE422 /* BezelServices.h */,

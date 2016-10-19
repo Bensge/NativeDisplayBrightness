@@ -11,6 +11,7 @@
 		9DBE37541DB7990900ABE422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37531DB7990900ABE422 /* main.m */; };
 		9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37551DB7990900ABE422 /* Assets.xcassets */; };
 		9DBE37591DB7990900ABE422 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37571DB7990900ABE422 /* MainMenu.xib */; };
+		9DBE37621DB7996100ABE422 /* DDC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,9 @@
 		9DBE37551DB7990900ABE422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DBE37581DB7990900ABE422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9DBE375A1DB7990900ABE422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DBE37601DB7996100ABE422 /* DDC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDC.m; sourceTree = "<group>"; };
+		9DBE37611DB7996100ABE422 /* DDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDC.h; sourceTree = "<group>"; };
+		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +62,10 @@
 				9DBE37551DB7990900ABE422 /* Assets.xcassets */,
 				9DBE37571DB7990900ABE422 /* MainMenu.xib */,
 				9DBE375A1DB7990900ABE422 /* Info.plist */,
+				9DBE37601DB7996100ABE422 /* DDC.m */,
+				9DBE37611DB7996100ABE422 /* DDC.h */,
 				9DBE37521DB7990900ABE422 /* Supporting Files */,
+				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
 			);
 			path = NativeDisplayBrightness;
 			sourceTree = "<group>";
@@ -141,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DBE37621DB7996100ABE422 /* DDC.m in Sources */,
 				9DBE37541DB7990900ABE422 /* main.m in Sources */,
 				9DBE37511DB7990900ABE422 /* AppDelegate.m in Sources */,
 			);

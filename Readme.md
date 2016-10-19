@@ -10,6 +10,6 @@ Needless to say, your monitor needs to support DDC/CI for this app to work.
 
 ## License
 
-This application uses code borrowed from (ddcctl)[https://github.com/kfix/ddcctl] which uses code from (DDC-CI-Tools)[https://github.com/jontaylor/DDC-CI-Tools-for-OS-X]
+This application uses code borrowed from [ddcctl](https://github.com/kfix/ddcctl) which uses code from [DDC-CI-Tools](https://github.com/jontaylor/DDC-CI-Tools-for-OS-X)
 
 GNU GENERAL PUBLIC LICENSE

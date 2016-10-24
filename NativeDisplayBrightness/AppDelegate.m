@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "DDC.h"
 #import "BezelServices.h"
+#import "OSD.h"
 #include <dlfcn.h>
 @import Carbon;
 
@@ -19,7 +20,7 @@ static const float brightnessStep = 100/16.f;
 
 #pragma mark - variables
 
-void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout);
+void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
 
 #pragma mark - functions
 
@@ -63,16 +64,23 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 @implementation AppDelegate
 @synthesize brightness=_brightness;
 
-- (void)_loadBezelServices
+- (BOOL)_loadBezelServices
 {
     // Load BezelServices framework
     void *handle = dlopen("/System/Library/PrivateFrameworks/BezelServices.framework/Versions/A/BezelServices", RTLD_GLOBAL);
     if (!handle) {
         NSLog(@"Error opening framework");
+        return NO;
     }
     else {
         _BSDoGraphicWithMeterAndTimeout = dlsym(handle, "BSDoGraphicWithMeterAndTimeout");
+        return _BSDoGraphicWithMeterAndTimeout != NULL;
     }
+}
+
+- (BOOL)_loadOSDFramework
+{
+    return [[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/OSD.framework"] load];
 }
 
 - (void)_configureLoginItem
@@ -144,7 +152,10 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [self _loadBezelServices];
+    if (![self _loadBezelServices])
+    {
+        [self _loadOSDFramework];
+    }
     [self _configureLoginItem];
     [self _checkTrusted];
     [self _registerGlobalKeyboardEvents];
@@ -168,7 +179,16 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     _brightness = value;
     
     CGDirectDisplayID display = CGSMainDisplayID();
-    _BSDoGraphicWithMeterAndTimeout(display, BSGraphicBacklightMeter, 0x0, value/100.f, 1);
+    
+    if (_BSDoGraphicWithMeterAndTimeout != NULL)
+    {
+        // El Capitan and probably older systems
+        _BSDoGraphicWithMeterAndTimeout(display, BSGraphicBacklightMeter, 0x0, value/100.f, 1);
+    }
+    else {
+        // Sierra+
+        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:value/brightnessStep totalChiclets:100.f/brightnessStep locked:NO];
+    }
     
     for (NSScreen *screen in NSScreen.screens) {
         NSDictionary *description = [screen deviceDescription];

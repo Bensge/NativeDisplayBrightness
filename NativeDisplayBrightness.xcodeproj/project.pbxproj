@@ -15,6 +15,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9D1F75421DBD44310039345A /* OSD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSD.h; sourceTree = "<group>"; };
+		9D1F75431DBD48310039345A /* CoreGraphicsPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreGraphicsPriv.h; sourceTree = "<group>"; };
 		9DBE374C1DB7990900ABE422 /* NativeDisplayBrightness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeDisplayBrightness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DBE374F1DB7990900ABE422 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DBE37501DB7990900ABE422 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -70,6 +72,8 @@
 				9DBE37611DB7996100ABE422 /* DDC.h */,
 				9DBE37521DB7990900ABE422 /* Supporting Files */,
 				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
+				9D1F75421DBD44310039345A /* OSD.h */,
+				9D1F75431DBD48310039345A /* CoreGraphicsPriv.h */,
 			);
 			path = NativeDisplayBrightness;
 			sourceTree = "<group>";
@@ -302,6 +306,7 @@
 				9DBE375F1DB7990900ABE422 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -9,6 +9,8 @@
 #ifndef BezelServices_h
 #define BezelServices_h
 
+#include "CoreGraphicsPriv.h"
+
 typedef enum {
     BSGraphicBacklightMeter                         = 0xfffffff7,
     BSGraphicBacklightFailure                       = 0xfffffff6,
@@ -33,8 +35,5 @@ typedef enum {
 extern void *BSDoGraphicWithMessage(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, const char *arg3, int length);
 extern void *BSDoGraphicWithMeterAndTimeout(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout);
 extern void *LoadBezelServicesConnection();
-
-CG_EXTERN CGDirectDisplayID CGSMainDisplayID(void);
-
 
 #endif /* BezelServices_h */

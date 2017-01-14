@@ -152,6 +152,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    delegateInstance = self;
     if (![self _loadBezelServices])
     {
         [self _loadOSDFramework];
@@ -160,10 +161,28 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     [self _checkTrusted];
     [self _registerGlobalKeyboardEvents];
     [self _loadBrightness];
+    [self _registerSignalHandling];
+}
+
+__weak AppDelegate *delegateInstance = nil;
+
+void shutdownSignalHandler(int signal) {
+    NSLog(@"Caught SIGTERM");
+    [delegateInstance _willTerminate];
+}
+
+- (void)_registerSignalHandling
+{
+    signal(SIGTERM, shutdownSignalHandler);
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+    [self _willTerminate];
+}
+
+- (void)_willTerminate
 {
     NSLog(@"willTerminate");
     [self _saveBrightness];

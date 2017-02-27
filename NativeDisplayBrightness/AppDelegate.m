@@ -169,6 +169,7 @@ __weak AppDelegate *delegateInstance = nil;
 void shutdownSignalHandler(int signal) {
     NSLog(@"Caught SIGTERM");
     [delegateInstance _willTerminate];
+    exit(0);
 }
 
 - (void)_registerSignalHandling

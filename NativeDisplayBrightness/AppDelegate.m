@@ -123,7 +123,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     
     CFRunLoopRef runloop = (CFRunLoopRef)CFRunLoopGetCurrent();
     
-    CGEventMask interestedEvents = 0xFFF; //kCGEventKeyDown | NSKeyUp;
+    CGEventMask interestedEvents = kCGEventKeyDown | NSKeyUp;
     CFMachPortRef eventTap = CGEventTapCreate(kCGAnnotatedSessionEventTap, kCGHeadInsertEventTap,
                                               kCGEventTapOptionDefault, interestedEvents, keyboardCGEventCallback, (__bridge void * _Nullable)(self));
     // by passing self as last argument, you can later send events to this class instance

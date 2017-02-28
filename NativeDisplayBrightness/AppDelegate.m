@@ -59,6 +59,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 
 @property (weak) IBOutlet NSWindow *window;
 @property (nonatomic) float brightness;
+@property (strong, nonatomic) dispatch_source_t signalHandlerSource;
 @end
 
 @implementation AppDelegate
@@ -152,7 +153,6 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    delegateInstance = self;
     if (![self _loadBezelServices])
     {
         [self _loadOSDFramework];
@@ -164,16 +164,21 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     [self _registerSignalHandling];
 }
 
-__weak AppDelegate *delegateInstance = nil;
-
-void shutdownSignalHandler(int signal) {
-    NSLog(@"Caught SIGTERM");
-    [delegateInstance _willTerminate];
-    exit(0);
+void shutdownSignalHandler(int signal)
+{
+    //Don't do anything
 }
 
 - (void)_registerSignalHandling
 {
+    //Register signal callback that will gracefully shut the application down
+    self.signalHandlerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGTERM, 0, dispatch_get_main_queue());
+    dispatch_source_set_event_handler(self.signalHandlerSource, ^{
+        NSLog(@"Caught SIGTERM");
+        [[NSApplication sharedApplication] terminate:self];
+    });
+    dispatch_resume(self.signalHandlerSource);
+    //Register signal handler that will prevent the app from being killed
     signal(SIGTERM, shutdownSignalHandler);
 }
 

@@ -41,7 +41,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
                              CGEventRef event,
                              void *refcon)
 {
-    //Surpress the brightness key events to prevent other applications from catching it
+    //Surpress the F1/F2 key events to prevent other applications from catching it or playing beep sound
     if (type == NX_KEYDOWN || type == NX_KEYUP || type == NX_FLAGSCHANGED)
     {
         int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
@@ -123,8 +123,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     }];
     
     CFRunLoopRef runloop = (CFRunLoopRef)CFRunLoopGetCurrent();
-    
-    CGEventMask interestedEvents = kCGEventKeyDown | NSKeyUp;
+    CGEventMask interestedEvents = NX_KEYDOWNMASK | NX_KEYUPMASK | NX_FLAGSCHANGEDMASK;
     CFMachPortRef eventTap = CGEventTapCreate(kCGAnnotatedSessionEventTap, kCGHeadInsertEventTap,
                                               kCGEventTapOptionDefault, interestedEvents, keyboardCGEventCallback, (__bridge void * _Nullable)(self));
     // by passing self as last argument, you can later send events to this class instance

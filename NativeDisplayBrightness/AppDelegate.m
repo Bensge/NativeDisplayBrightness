@@ -13,8 +13,14 @@
 #include <dlfcn.h>
 @import Carbon;
 
+
+
 #pragma mark - constants
 
+//#define BRIGHTNESS_DOWN_KEY kVK_F1
+//#define BRIGHTNESS_UP_KEY kVK_F2
+#define BRIGHTNESS_DOWN_KEY kVK_F16
+#define BRIGHTNESS_UP_KEY kVK_F17
 static NSString *brightnessValuePreferenceKey = @"brightness";
 static const float brightnessStep = 100/16.f;
 
@@ -45,7 +51,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     if (type == NX_KEYDOWN || type == NX_KEYUP || type == NX_FLAGSCHANGED)
     {
         int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-        if (keyCode == kVK_F2 || keyCode == kVK_F1)
+        if (keyCode == BRIGHTNESS_UP_KEY || keyCode == BRIGHTNESS_DOWN_KEY)
         {
             return NULL;
         }
@@ -102,7 +108,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 {
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSEventMaskKeyDown | NSEventMaskKeyUp handler:^(NSEvent *_Nonnull event) {
         //NSLog(@"event!!");
-        if (event.keyCode == kVK_F1)
+        if (event.keyCode == BRIGHTNESS_DOWN_KEY)
         {
             if (event.type == NSEventTypeKeyDown)
             {
@@ -111,7 +117,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
                 });
             }
         }
-        else if (event.keyCode == kVK_F2)
+        else if (event.keyCode == BRIGHTNESS_UP_KEY)
         {
             if (event.type == NSEventTypeKeyDown)
             {

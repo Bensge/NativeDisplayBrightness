@@ -17,10 +17,8 @@
 
 #pragma mark - constants
 
-//#define BRIGHTNESS_DOWN_KEY kVK_F1
-//#define BRIGHTNESS_UP_KEY kVK_F2
-#define BRIGHTNESS_DOWN_KEY kVK_F16
-#define BRIGHTNESS_UP_KEY kVK_F17
+#define BRIGHTNESS_DOWN_KEY kVK_F1
+#define BRIGHTNESS_UP_KEY kVK_F2
 static NSString *brightnessValuePreferenceKey = @"brightness";
 static const float brightnessStep = 100/16.f;
 

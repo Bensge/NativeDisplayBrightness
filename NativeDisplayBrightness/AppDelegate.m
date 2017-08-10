@@ -59,11 +59,11 @@ static const float brightnessStep = 100/16.f;
 
 #pragma mark - variables
 
-void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
+static void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
 
 #pragma mark - functions
 
-BOOL set_control(CGDirectDisplayID display_id, uint control_id, uint new_value)
+static BOOL set_control(CGDirectDisplayID display_id, uint control_id, uint new_value)
 {
     struct DDCWriteCommand command;
     command.control_id = control_id;
@@ -78,7 +78,7 @@ BOOL set_control(CGDirectDisplayID display_id, uint control_id, uint new_value)
     return isCommandOk;
 }
 
-BOOL get_control(CGDirectDisplayID display_id, uint control_id, uint* current_value, uint* max_value)
+static BOOL get_control(CGDirectDisplayID display_id, uint control_id, uint* current_value, uint* max_value)
 {
     struct DDCReadCommand command = {.control_id = control_id, .max_value = 0, .current_value = 0 };
     BOOL isCommandOk = DDCRead(display_id, &command);
@@ -98,7 +98,7 @@ BOOL get_control(CGDirectDisplayID display_id, uint control_id, uint* current_va
     return isCommandOk;
 }
 
-CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
+static CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
                              CGEventType type,
                              CGEventRef event,
                              void *refcon)
@@ -114,6 +114,21 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     }
     return event;
 }
+
+static void showBrightnessLevelPaneOnDisplay (uint brightnessLevel, CGDirectDisplayID displayId)
+{
+    if (_BSDoGraphicWithMeterAndTimeout != NULL)
+    {
+        // El Capitan and probably older systems
+        _BSDoGraphicWithMeterAndTimeout(displayId, BSGraphicBacklightMeter, 0x0, (float)brightnessLevel/100.f, 1);
+    }
+    else {
+        // Sierra+
+        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:displayId priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(float)brightnessLevel/brightnessStep totalChiclets:100.f/brightnessStep locked:NO];
+    }
+    
+}
+
 
 #pragma mark - AppDelegate
 
@@ -281,15 +296,7 @@ void shutdownSignalHandler(int signal)
             if (set_control(currentDisplayId, BRIGHTNESS, newBrightness)) {
                 
                 // Display the brighness level OSD
-                if (_BSDoGraphicWithMeterAndTimeout != NULL)
-                {
-                    // El Capitan and probably older systems
-                    _BSDoGraphicWithMeterAndTimeout(currentDisplayId, BSGraphicBacklightMeter, 0x0, (float)newBrightness/100.f, 1);
-                }
-                else {
-                    // Sierra+
-                    [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:currentDisplayId priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(float)newBrightness/brightnessStep totalChiclets:100.f/brightnessStep locked:NO];
-                }
+                showBrightnessLevelPaneOnDisplay(newBrightness, currentDisplayId);
                 
                 if  (! isCurrentBrighnessAvailableFromDisplay) {
                     // Save the new brighness value
@@ -307,6 +314,10 @@ void shutdownSignalHandler(int signal)
                     [NSUserDefaults.standardUserDefaults setObject:newDisplayBrighnesses forKey:kDisplaysBrightnessDefaultsKey];
                 }
             }
+        }
+        else {
+            // Min or max brightness level: present the OSD to provide a feedback to the user, but don't send a command
+            showBrightnessLevelPaneOnDisplay(newBrightness, currentDisplayId);
         }
     }
 }

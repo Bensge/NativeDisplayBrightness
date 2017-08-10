@@ -152,12 +152,6 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     LSSharedFileListInsertItemURL(loginItemsListRef, kLSSharedFileListItemLast, NULL, NULL, (__bridge CFURLRef)bundleURL, (__bridge CFDictionaryRef)properties,NULL);
 }
 
-- (void)_checkTrusted
-{
-    BOOL isTrusted = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge NSString *)kAXTrustedCheckOptionPrompt: @true});
-    NSLog(@"istrusted: %i",isTrusted);
-}
-
 - (void)_registerGlobalKeyboardEvents
 {
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSEventMaskKeyDown | NSEventMaskKeyUp handler:^(NSEvent *_Nonnull event) {
@@ -202,9 +196,22 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
         [self _loadOSDFramework];
     }
     [self _configureLoginItem];
-    [self _checkTrusted];
-    [self _registerGlobalKeyboardEvents];
     [self _registerSignalHandling];
+    
+    // If the process is trusted, register for keyboard events; otherwise wait for the user to declare the process trusted
+    if (AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge NSString *)kAXTrustedCheckOptionPrompt: @true})) {
+        [self _registerGlobalKeyboardEvents];
+    }
+    else {
+        [NSTimer scheduledTimerWithTimeInterval:3.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            
+            // Check if the process is trusted without prompting the user again
+            if (AXIsProcessTrustedWithOptions(nil)) {
+                [self _registerGlobalKeyboardEvents];
+                [timer invalidate];
+            }
+        }];
+    }
 }
 
 void shutdownSignalHandler(int signal)

@@ -12,7 +12,7 @@ This app also shows the **native** system UI when changing brightness! It uses t
 
 Your monitor needs to support DDC/CI for this app to work. If you don't see the brightness system UI displayed on your monitor when pressing the F1 / F2 keys, this means that your monitor is not supported.
 
-If your monitor supports reading the current brightness value from  DDC/CI, the app increments / decrements the brigness staring from the monitor current brightness value. This allows you to set the brighness using the monitor's OSD and to adjust it later with the app
+If your monitor supports reading the current brightness value from  DDC/CI, the app increments / decrements the brigness starting from the monitor current brightness value. This allows you to set the brighness using the monitor's OSD and to adjust it later with the app
 
 ## Multiple monitors support
 

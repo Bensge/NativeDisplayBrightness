@@ -8,7 +8,15 @@ This a utility application to control monitor brightness with the F1, F2 keys. I
 
 This app also shows the **native** system UI when changing brightness! It uses the private `BezelServices` framework for this.
 
-Needless to say, your monitor needs to support DDC/CI for this app to work.
+## Monitors compatibility
+
+Your monitor needs to support DDC/CI for this app to work. If you don't see the brightness system UI displayed on your monitor when pressing the F1 / F2 keys, this means that your monitor is not supported.
+
+If your monitor supports reading the current brightness value from  DDC/CI, the app increments / decrements the brigness staring from the monitor current brightness value. This allows you to set the brighness using the monitor's OSD and to adjust it later with the app
+
+## Multiple monitors support
+
+If you have multiple external monitors connected to your Mac, the brighness adjustment is done on the monitor with the currently active window, and the brightness system UI is displayed on the adjusted monitor.
 
 ## License
 

@@ -9,8 +9,6 @@
 #ifndef OSD_h
 #define OSD_h
 
-#include "CoreGraphicsPriv.h"
-
 typedef enum {
     OSDGraphicBacklight                              = 1,//0xfffffff7,
     OSDGraphicEject                                  = 6,

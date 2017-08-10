@@ -11,11 +11,50 @@
 #import "BezelServices.h"
 #import "OSD.h"
 #include <dlfcn.h>
-@import Carbon;
+
+#pragma mark - Key codes of special keys
+
+// Extract from Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
+/* keycodes for keys that are independent of keyboard layout*/
+enum {
+    kVK_F17                       = 0x40,
+    kVK_VolumeUp                  = 0x48,
+    kVK_VolumeDown                = 0x49,
+    kVK_Mute                      = 0x4A,
+    kVK_F18                       = 0x4F,
+    kVK_F19                       = 0x50,
+    kVK_F20                       = 0x5A,
+    kVK_F5                        = 0x60,
+    kVK_F6                        = 0x61,
+    kVK_F7                        = 0x62,
+    kVK_F3                        = 0x63,
+    kVK_F8                        = 0x64,
+    kVK_F9                        = 0x65,
+    kVK_F11                       = 0x67,
+    kVK_F13                       = 0x69,
+    kVK_F16                       = 0x6A,
+    kVK_F14                       = 0x6B,
+    kVK_F10                       = 0x6D,
+    kVK_F12                       = 0x6F,
+    kVK_F15                       = 0x71,
+    kVK_Help                      = 0x72,
+    kVK_Home                      = 0x73,
+    kVK_PageUp                    = 0x74,
+    kVK_ForwardDelete             = 0x75,
+    kVK_F4                        = 0x76,
+    kVK_End                       = 0x77,
+    kVK_F2                        = 0x78,
+    kVK_PageDown                  = 0x79,
+    kVK_F1                        = 0x7A,
+    kVK_LeftArrow                 = 0x7B,
+    kVK_RightArrow                = 0x7C,
+    kVK_DownArrow                 = 0x7D,
+    kVK_UpArrow                   = 0x7E
+};
 
 #pragma mark - constants
 
-static NSString *brightnessValuePreferenceKey = @"brightness";
+static NSString *const kDisplaysBrightnessDefaultsKey = @"displays-brightness";
 static const float brightnessStep = 100/16.f;
 
 #pragma mark - variables
@@ -24,17 +63,40 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 #pragma mark - functions
 
-void set_control(CGDirectDisplayID cdisplay, uint control_id, uint new_value)
+BOOL set_control(CGDirectDisplayID display_id, uint control_id, uint new_value)
 {
     struct DDCWriteCommand command;
     command.control_id = control_id;
     command.new_value = new_value;
     
-    if (!DDCWrite(cdisplay, &command)){
-        NSLog(@"E: Failed to send DDC command!");
+    BOOL isCommandOk = DDCWrite(display_id, &command);
+    
+    if (! isCommandOk){
+        NSLog(@"E: Failed to send DDCWrite command to display %u!", display_id);
     }
+    
+    return isCommandOk;
 }
 
+BOOL get_control(CGDirectDisplayID display_id, uint control_id, uint* current_value, uint* max_value)
+{
+    struct DDCReadCommand command = {.control_id = control_id, .max_value = 0, .current_value = 0 };
+    BOOL isCommandOk = DDCRead(display_id, &command);
+    
+    if (isCommandOk) {
+        if (current_value != nil) {
+            *current_value = command.current_value;
+        }
+        
+        if (max_value != nil) {
+            *max_value = command.max_value;
+        }
+    }
+    else {
+        NSLog(@"E: Failed to send DDCRead command to display %u!", display_id);
+    }
+    return isCommandOk;
+}
 
 CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
                              CGEventType type,
@@ -58,12 +120,10 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
-@property (nonatomic) float brightness;
 @property (strong, nonatomic) dispatch_source_t signalHandlerSource;
 @end
 
 @implementation AppDelegate
-@synthesize brightness=_brightness;
 
 - (BOOL)_loadBezelServices
 {
@@ -107,7 +167,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
             if (event.type == NSEventTypeKeyDown)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self decreaseBrightness];
+                    [self incrementMainScreenBrightness: -brightnessStep];
                 });
             }
         }
@@ -116,7 +176,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
             if (event.type == NSEventTypeKeyDown)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self increaseBrightness];
+                    [self incrementMainScreenBrightness: brightnessStep];
                 });
             }
         }
@@ -135,21 +195,6 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     CGEventTapEnable(eventTap, true);
 }
 
-- (void)_saveBrightness
-{
-    [[NSUserDefaults standardUserDefaults] setFloat:self.brightness forKey:brightnessValuePreferenceKey];
-}
-
-- (void)_loadBrightness
-{
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-        brightnessValuePreferenceKey: @(8*brightnessStep)
-    }];
-    
-    _brightness = [[NSUserDefaults standardUserDefaults] floatForKey:brightnessValuePreferenceKey];
-    NSLog(@"Loaded value: %f",_brightness);
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     if (![self _loadBezelServices])
@@ -159,7 +204,6 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     [self _configureLoginItem];
     [self _checkTrusted];
     [self _registerGlobalKeyboardEvents];
-    [self _loadBrightness];
     [self _registerSignalHandling];
 }
 
@@ -184,13 +228,7 @@ void shutdownSignalHandler(int signal)
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
-    [self _willTerminate];
-}
 
-- (void)_willTerminate
-{
-    NSLog(@"willTerminate");
-    [self _saveBrightness];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) sender
@@ -198,46 +236,70 @@ void shutdownSignalHandler(int signal)
     return NO;
 }
 
-- (void)setBrightness:(float)value
+- (void)incrementMainScreenBrightness:(int)delta
 {
-    _brightness = value;
+    CGDirectDisplayID currentDisplayId = [NSScreen.mainScreen.deviceDescription [@"NSScreenNumber"] unsignedIntValue];
     
-    CGDirectDisplayID display = CGSMainDisplayID();
-    
-    if (_BSDoGraphicWithMeterAndTimeout != NULL)
-    {
-        // El Capitan and probably older systems
-        _BSDoGraphicWithMeterAndTimeout(display, BSGraphicBacklightMeter, 0x0, value/100.f, 1);
-    }
-    else {
-        // Sierra+
-        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:value/brightnessStep totalChiclets:100.f/brightnessStep locked:NO];
-    }
-    
-    for (NSScreen *screen in NSScreen.screens) {
-        NSDictionary *description = [screen deviceDescription];
-        if ([description objectForKey:@"NSDeviceIsScreen"]) {
-            CGDirectDisplayID screenNumber = [[description objectForKey:@"NSScreenNumber"] unsignedIntValue];
-            
-            set_control(screenNumber, BRIGHTNESS, value);
+    if (! CGDisplayIsBuiltin(currentDisplayId)) {
+        
+        uint currentBrightness = 50;
+        uint maxBrightness = 100;
+        
+        // Get the current display brightness
+        // Fist, try user defaults to avoid waiting for a timeout if the display is known not to support DDCRead;
+        // If user defaults are not set, read the brightness value from the display
+        
+        BOOL isCurrentBrighnessReadFromDefaults = NO;
+        NSString* currentDisplayIdKey = [NSString stringWithFormat:@"%u", currentDisplayId];
+        NSDictionary* savedDisplayBrighnesses =  [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
+        if ([savedDisplayBrighnesses isKindOfClass:[NSDictionary class]]) {
+            NSNumber* savedCurrentBrightness = savedDisplayBrighnesses [currentDisplayIdKey];
+            if ([savedCurrentBrightness isKindOfClass:[NSNumber class]]) {
+                currentBrightness = (uint) savedCurrentBrightness.unsignedIntegerValue;
+                isCurrentBrighnessReadFromDefaults = YES;
+            }
+        }
+        
+        BOOL isCurrentBrighnessAvailableFromDisplay = NO;
+        if (! isCurrentBrighnessReadFromDefaults) {
+            isCurrentBrighnessAvailableFromDisplay = get_control(currentDisplayId, BRIGHTNESS, &currentBrightness, &maxBrightness);
+        }
+
+        uint newBrightness = MIN((uint)MAX((int)currentBrightness + delta, 0), maxBrightness);
+        
+        if (newBrightness != currentBrightness) {
+           
+            if (set_control(currentDisplayId, BRIGHTNESS, newBrightness)) {
+                
+                // Display the brighness level OSD
+                if (_BSDoGraphicWithMeterAndTimeout != NULL)
+                {
+                    // El Capitan and probably older systems
+                    _BSDoGraphicWithMeterAndTimeout(currentDisplayId, BSGraphicBacklightMeter, 0x0, (float)newBrightness/100.f, 1);
+                }
+                else {
+                    // Sierra+
+                    [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:currentDisplayId priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(float)newBrightness/brightnessStep totalChiclets:100.f/brightnessStep locked:NO];
+                }
+                
+                if  (! isCurrentBrighnessAvailableFromDisplay) {
+                    // Save the new brighness value
+                    NSMutableDictionary* newDisplayBrighnesses;
+                    NSDictionary* savedDisplayBrighnesses =  [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
+                    
+                    if ([savedDisplayBrighnesses isKindOfClass:[NSDictionary class]]) {
+                        newDisplayBrighnesses = [NSMutableDictionary dictionaryWithDictionary:savedDisplayBrighnesses];
+                    }                    else {
+                        newDisplayBrighnesses = [NSMutableDictionary new];
+                    }
+                    
+                    newDisplayBrighnesses [currentDisplayIdKey] = @(newBrightness);
+                    
+                    [NSUserDefaults.standardUserDefaults setObject:newDisplayBrighnesses forKey:kDisplaysBrightnessDefaultsKey];
+                }
+            }
         }
     }
 }
-
-- (float)brightness
-{
-    return _brightness;
-}
-
-- (void)increaseBrightness
-{
-    self.brightness = MIN(self.brightness+brightnessStep,100);
-}
-
-- (void)decreaseBrightness
-{
-    self.brightness = MAX(self.brightness-brightnessStep,0);
-}
-
 
 @end

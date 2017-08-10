@@ -203,14 +203,16 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
         [self _registerGlobalKeyboardEvents];
     }
     else {
-        [NSTimer scheduledTimerWithTimeInterval:3.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            
-            // Check if the process is trusted without prompting the user again
-            if (AXIsProcessTrustedWithOptions(nil)) {
-                [self _registerGlobalKeyboardEvents];
-                [timer invalidate];
-            }
-        }];
+        [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(startMonitoringKeysIfProcessTrusted:) userInfo:nil repeats:YES];
+    }
+}
+
+- (void) startMonitoringKeysIfProcessTrusted:(NSTimer*)timer
+{
+    // Check if the process is trusted without prompting the user again
+    if (AXIsProcessTrustedWithOptions(nil)) {
+        [self _registerGlobalKeyboardEvents];
+        [timer invalidate];
     }
 }
 

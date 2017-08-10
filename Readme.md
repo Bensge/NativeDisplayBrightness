@@ -12,11 +12,11 @@ This app also shows the **native** system UI when changing brightness! It uses t
 
 Your monitor needs to support DDC/CI for this app to work. If you don't see the brightness system UI displayed on your monitor when pressing the F1 / F2 keys, this means that your monitor is not supported.
 
-If your monitor supports reading the current brightness value from  DDC/CI, the app increments / decrements the brigness starting from the monitor current brightness value. This allows you to set the brighness using the monitor's OSD and to adjust it later with the app
+If your monitor supports reading the current brightness value from  DDC/CI, the app increments / decrements the brightness starting from the monitor current brightness value. This allows you to set the brightness using the monitor's OSD and to adjust it later with the app
 
 ## Multiple monitors support
 
-If you have multiple external monitors connected to your Mac, the brighness adjustment is done on the monitor with the currently active window, and the brightness system UI is displayed on the adjusted monitor.
+If you have multiple external monitors connected to your Mac, the brightness adjustment is done on the monitor with the currently active window, and the brightness system UI is displayed on the adjusted monitor.
 
 ## License
 

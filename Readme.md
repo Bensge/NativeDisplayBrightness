@@ -4,9 +4,13 @@
 
 ![native brightness UI](https://raw.githubusercontent.com/Bensge/NativeDisplayBrightness/master/nativeUI.png)
 
-This a utility application to control monitor brightness with the F1, F2 keys. It utilizes DDC/CI, but this app doesn't have the freezing issues that similar aplications tend to suffer from.
+This a utility application to control the brightness of an external monitor directly from your keyboard.
 
-This app also shows the **native** system UI when changing brightness! It uses the private `BezelServices` framework for this.
+Use the `F1` /  `F2` key to decrease / increase the brightness of the external monitor. If you have an Apple or similar keyboard, you probably need to also press the `fn` key.
+
+For a finer brightness level adjustment, you add the option key, i.e use `alt` + `F1` to decrease the brightness, or  `alt` + `F2` to increase it.
+
+This app  shows the **native** system UI when changing brightness! It uses the private `BezelServices` framework for this.
 
 ## Monitors compatibility
 
@@ -17,6 +21,10 @@ If your monitor supports reading the current brightness value from  DDC/CI, the 
 ## Multiple monitors support
 
 If you have multiple external monitors connected to your Mac, the brightness adjustment is done on the monitor with the currently active window, and the brightness system UI is displayed on the adjusted monitor.
+
+## Requirements
+
+macOS version: 10.10 to 10.13
 
 ## License
 

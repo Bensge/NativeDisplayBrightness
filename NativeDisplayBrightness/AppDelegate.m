@@ -55,7 +55,9 @@ enum {
 #pragma mark - constants
 
 static NSString *const kDisplaysBrightnessDefaultsKey = @"displays-brightness";
-static const float brightnessStep = 100/16.f;
+static const int brightnessStepsCount = 16;
+static const int brightnessSubstepsPerStep = 4;
+static const int brightnessSubstepsCount = brightnessStepsCount * brightnessSubstepsPerStep;
 
 #pragma mark - variables
 
@@ -115,16 +117,16 @@ static CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     return event;
 }
 
-static void showBrightnessLevelPaneOnDisplay (uint brightnessLevel, CGDirectDisplayID displayId)
+static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CGDirectDisplayID displayId)
 {
     if (_BSDoGraphicWithMeterAndTimeout != NULL)
     {
         // El Capitan and probably older systems
-        _BSDoGraphicWithMeterAndTimeout(displayId, BSGraphicBacklightMeter, 0x0, (float)brightnessLevel/100.f, 1);
+        _BSDoGraphicWithMeterAndTimeout(displayId, BSGraphicBacklightMeter, 0x0, (float)brightnessLevelInSubsteps/(float)brightnessSubstepsCount, 1);
     }
     else {
         // Sierra+
-        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:displayId priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(float)brightnessLevel/brightnessStep totalChiclets:100.f/brightnessStep locked:NO];
+        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:displayId priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(float)brightnessLevelInSubsteps totalChiclets:brightnessSubstepsCount locked:NO];
     }
     
 }
@@ -169,23 +171,22 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevel, CGDirectDisp
 
 - (void)_registerGlobalKeyboardEvents
 {
-    [NSEvent addGlobalMonitorForEventsMatchingMask:NSEventMaskKeyDown | NSEventMaskKeyUp handler:^(NSEvent *_Nonnull event) {
-        //NSLog(@"event!!");
-        if (event.keyCode == kVK_F1)
+    [NSEvent addGlobalMonitorForEventsMatchingMask:NSEventMaskKeyDown handler:^(NSEvent *_Nonnull event) {
+        if (event.type == NSEventTypeKeyDown)
         {
-            if (event.type == NSEventTypeKeyDown)
+            BOOL isOptionModifierPressed = (event.modifierFlags & NSAlternateKeyMask) != 0;
+        
+            if ((event.keyCode == kVK_F1) ||  (event.keyCode == kVK_F2))
             {
+                // Screen brightness adjustment
+                int brightnessDelta = isOptionModifierPressed ? 1 : brightnessSubstepsPerStep;
+                if (event.keyCode == kVK_F1) {
+                    // F1 = decrease broghtness
+                    brightnessDelta = -brightnessDelta;
+                }
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self incrementMainScreenBrightness: -brightnessStep];
-                });
-            }
-        }
-        else if (event.keyCode == kVK_F2)
-        {
-            if (event.type == NSEventTypeKeyDown)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self incrementMainScreenBrightness: brightnessStep];
+                    [self incrementMainScreenBrightnessWithStep: brightnessDelta];
                 });
             }
         }
@@ -260,7 +261,7 @@ void shutdownSignalHandler(int signal)
     return NO;
 }
 
-- (void)incrementMainScreenBrightness:(int)delta
+- (void)incrementMainScreenBrightnessWithStep:(int)deltaInSubsteps
 {
     CGDirectDisplayID currentDisplayId = [NSScreen.mainScreen.deviceDescription [@"NSScreenNumber"] unsignedIntValue];
     
@@ -289,14 +290,24 @@ void shutdownSignalHandler(int signal)
             isCurrentBrighnessAvailableFromDisplay = get_control(currentDisplayId, BRIGHTNESS, &currentBrightness, &maxBrightness);
         }
 
-        uint newBrightness = MIN((uint)MAX((int)currentBrightness + delta, 0), maxBrightness);
+        int currentBrightnessInSubsteps = round((double)currentBrightness / (double)maxBrightness * (double)brightnessSubstepsCount);
+        
+        int newBrightnessInSubsteps = MIN(MAX(0, currentBrightnessInSubsteps + deltaInSubsteps), brightnessSubstepsCount);
+        if (abs(deltaInSubsteps) != 1) {
+            // newBrightnessInSubsteps must be a multiple of deltaInSubsteps
+            newBrightnessInSubsteps = (newBrightnessInSubsteps / deltaInSubsteps) * deltaInSubsteps;
+        }
+        
+        uint newBrightness = (uint) round((double)newBrightnessInSubsteps / (double)brightnessSubstepsCount * (double)maxBrightness);
         
         if (newBrightness != currentBrightness) {
            
             if (set_control(currentDisplayId, BRIGHTNESS, newBrightness)) {
                 
+                // NSLog(@"New brightness: %d", newBrightness);
+                
                 // Display the brighness level OSD
-                showBrightnessLevelPaneOnDisplay(newBrightness, currentDisplayId);
+                showBrightnessLevelPaneOnDisplay(newBrightnessInSubsteps, currentDisplayId);
                 
                 if  (! isCurrentBrighnessAvailableFromDisplay) {
                     // Save the new brighness value

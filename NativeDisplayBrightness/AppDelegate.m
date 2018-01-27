@@ -14,6 +14,9 @@
 
 #pragma mark - Key codes of special keys
 
+#define BRIGHTNESS_DOWN_KEY         kVK_F1
+#define BRIGHTNESS_UP_KEY           kVK_F2
+
 // Extract from Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
 /* keycodes for keys that are independent of keyboard layout*/
 enum {
@@ -109,7 +112,7 @@ static CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     if (type == NX_KEYDOWN || type == NX_KEYUP || type == NX_FLAGSCHANGED)
     {
         int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-        if (keyCode == kVK_F2 || keyCode == kVK_F1)
+        if (keyCode == BRIGHTNESS_UP_KEY || keyCode == BRIGHTNESS_DOWN_KEY)
         {
             return NULL;
         }
@@ -176,11 +179,11 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
         {
             BOOL isOptionModifierPressed = (event.modifierFlags & NSAlternateKeyMask) != 0;
         
-            if ((event.keyCode == kVK_F1) ||  (event.keyCode == kVK_F2))
+            if ((event.keyCode == BRIGHTNESS_DOWN_KEY) ||  (event.keyCode == BRIGHTNESS_UP_KEY))
             {
                 // Screen brightness adjustment
                 int brightnessDelta = isOptionModifierPressed ? 1 : brightnessSubstepsPerStep;
-                if (event.keyCode == kVK_F1) {
+                if (event.keyCode == BRIGHTNESS_DOWN_KEY) {
                     // F1 = decrease broghtness
                     brightnessDelta = -brightnessDelta;
                 }

@@ -217,6 +217,23 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     [self _configureLoginItem];
     [self _registerSignalHandling];
     
+    NSStatusBar *bar = [NSStatusBar systemStatusBar];
+    self.statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
+    
+    NSImage *icon = [NSImage imageNamed:@"icon"];
+    icon.template = YES;
+    self.statusItem.image = icon;
+    self.statusItem.highlightMode = YES;
+    
+    NSMenu *menu = [[NSMenu alloc] init];
+    NSMenuItem *online = [[NSMenuItem alloc] initWithTitle:@"Quit"
+                                                    action:@selector(quitApp)
+                                             keyEquivalent:@""];
+    online.target = self;
+    [menu addItem:online];
+    
+    self.statusItem.menu = menu;
+    
     // If the process is trusted, register for keyboard events; otherwise wait for the user to declare the process trusted
     if (AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge NSString *)kAXTrustedCheckOptionPrompt: @true})) {
         [self _registerGlobalKeyboardEvents];
@@ -224,6 +241,20 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     else {
         [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(startMonitoringKeysIfProcessTrusted:) userInfo:nil repeats:YES];
     }
+}
+
+-(void) quitApp {
+    [NSApp terminate:self];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification
+{
+    
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) sender
+{
+    return NO;
 }
 
 - (void) startMonitoringKeysIfProcessTrusted:(NSTimer*)timer
@@ -251,17 +282,6 @@ void shutdownSignalHandler(int signal)
     dispatch_resume(self.signalHandlerSource);
     //Register signal handler that will prevent the app from being killed
     signal(SIGTERM, shutdownSignalHandler);
-}
-
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification
-{
-
-}
-
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication*) sender
-{
-    return NO;
 }
 
 - (void)incrementMainScreenBrightnessWithStep:(int)deltaInSubsteps

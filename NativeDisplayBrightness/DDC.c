@@ -358,7 +358,7 @@ bool EDIDTest(CGDirectDisplayID displayID, struct EDID *edid) {
     IOI2CRequest request = {};
 /*! from https://opensource.apple.com/source/IOGraphics/IOGraphics-513.1/IOGraphicsFamily/IOKit/i2c/IOI2CInterface.h.auto.html
  *  not in https://developer.apple.com/reference/kernel/1659924-ioi2cinterface.h/ioi2crequest?changes=latest_beta&language=objc
- * @struct IOI2CRequest
+ * struct IOI2CRequest
  * @abstract A structure defining an I2C bus transaction.
  * @discussion This structure is used to request an I2C transaction consisting of a send (write) to and reply (read) from a device, either of which is optional, to be carried out atomically on an I2C bus.
  * @field __reservedA Set to zero.

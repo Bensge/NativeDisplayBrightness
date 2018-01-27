@@ -10,7 +10,6 @@
 		9DBE37511DB7990900ABE422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37501DB7990900ABE422 /* AppDelegate.m */; };
 		9DBE37541DB7990900ABE422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37531DB7990900ABE422 /* main.m */; };
 		9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37551DB7990900ABE422 /* Assets.xcassets */; };
-		9DBE37591DB7990900ABE422 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37571DB7990900ABE422 /* MainMenu.xib */; };
 		9DBE37621DB7996100ABE422 /* DDC.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
@@ -21,7 +20,6 @@
 		9DBE37501DB7990900ABE422 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9DBE37531DB7990900ABE422 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9DBE37551DB7990900ABE422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9DBE37581DB7990900ABE422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9DBE375A1DB7990900ABE422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DBE37601DB7996100ABE422 /* DDC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DDC.c; sourceTree = "<group>"; };
 		9DBE37611DB7996100ABE422 /* DDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDC.h; sourceTree = "<group>"; };
@@ -63,7 +61,6 @@
 				9DBE374F1DB7990900ABE422 /* AppDelegate.h */,
 				9DBE37501DB7990900ABE422 /* AppDelegate.m */,
 				9DBE37551DB7990900ABE422 /* Assets.xcassets */,
-				9DBE37571DB7990900ABE422 /* MainMenu.xib */,
 				9DBE375A1DB7990900ABE422 /* Info.plist */,
 				9DBE37601DB7996100ABE422 /* DDC.c */,
 				9DBE37641DB7A87200ABE422 /* Readme.md */,
@@ -110,7 +107,7 @@
 		9DBE37441DB7990900ABE422 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Benno Krauss";
 				TargetAttributes = {
 					9DBE374B1DB7990900ABE422 = {
@@ -143,7 +140,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */,
-				9DBE37591DB7990900ABE422 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,17 +157,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		9DBE37571DB7990900ABE422 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9DBE37581DB7990900ABE422 /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9DBE375B1DB7990900ABE422 /* Debug */ = {

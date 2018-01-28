@@ -20,6 +20,7 @@
 
 #define STATUS_ICON_WIDTH           24
 #define STATUS_ICON_WIDTH_TEXT      52
+#define STATUS_ICON_WIDTH_TEXT_100  58
 
 // Extract from Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
 /* keycodes for keys that are independent of keyboard layout*/

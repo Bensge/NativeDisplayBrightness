@@ -167,6 +167,12 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
+    //DEBUG: clean user settings if needed
+//    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//    [NSApp terminate:0];
+    
     if (![self _loadBezelServices])
     {
         [self _loadOSDFramework];
@@ -186,7 +192,13 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     CGDirectDisplayID currentDisplayId = [NSScreen.mainScreen.deviceDescription [@"NSScreenNumber"] unsignedIntValue];
     if (! CGDisplayIsBuiltin(currentDisplayId)) {
         uint loadedBrightness = 50;
-        [AppDelegate loadSavedBrightness:&loadedBrightness forDisplayID:currentDisplayId];
+        uint maxBrightness = 100;
+        bool loadedFromSettings = [AppDelegate loadSavedBrightness:&loadedBrightness forDisplayID:currentDisplayId];
+        if (!loadedFromSettings) {
+            NSLog(@"Settings not loaded, use monitor value: %i",loadedBrightness);
+            get_control(currentDisplayId, BRIGHTNESS, &loadedBrightness, &maxBrightness);
+            [AppDelegate saveBrightness:loadedBrightness forDisplayID:currentDisplayId];
+        }
         self.statusBarIcon.title = self.showBrightness ? [NSString stringWithFormat:@"%d%%",loadedBrightness] : @"";
     }
     
@@ -365,6 +377,7 @@ void shutdownSignalHandler(int signal)
     [NSUserDefaults.standardUserDefaults setObject:newDisplayBrighnesses forKey:kDisplaysBrightnessDefaultsKey];
     [NSUserDefaults.standardUserDefaults synchronize];
     APP_DELEGATE.currentBrightness = newBrightness;
+    APP_DELEGATE.statusBarIcon.length = APP_DELEGATE.currentBrightness == 100 ? STATUS_ICON_WIDTH_TEXT_100 : STATUS_ICON_WIDTH_TEXT;
 }
 
 + (BOOL)loadSavedBrightness:(uint*) savedBrightness forDisplayID:(CGDirectDisplayID) displayID {    
@@ -394,13 +407,11 @@ void shutdownSignalHandler(int signal)
         // If user defaults are not set, read the brightness value from the display
         
         BOOL isCurrentBrighnessReadFromDefaults = [AppDelegate loadSavedBrightness:&currentBrightness forDisplayID:currentDisplayId];
-        BOOL isCurrentBrighnessAvailableFromDisplay = NO;
         if (! isCurrentBrighnessReadFromDefaults) {
-            isCurrentBrighnessAvailableFromDisplay = get_control(currentDisplayId, BRIGHTNESS, &currentBrightness, &maxBrightness);
+            get_control(currentDisplayId, BRIGHTNESS, &currentBrightness, &maxBrightness);
         }
 
         int currentBrightnessInSubsteps = round((double)currentBrightness / (double)maxBrightness * (double)brightnessSubstepsCount);
-        
         int newBrightnessInSubsteps = MIN(MAX(0, currentBrightnessInSubsteps + deltaInSubsteps), brightnessSubstepsCount);
         if (abs(deltaInSubsteps) != 1) {
             // newBrightnessInSubsteps must be a multiple of deltaInSubsteps
@@ -412,7 +423,7 @@ void shutdownSignalHandler(int signal)
         
         if (newBrightness != currentBrightness) {
             if (set_control(currentDisplayId, BRIGHTNESS, newBrightness)) {
-                //NSLog(@"New brightness: %d", newBrightness);
+                NSLog(@"New brightness: %d", newBrightness);
                 APP_DELEGATE.statusBarIcon.title = APP_DELEGATE.showBrightness ? [NSString stringWithFormat:@"%i%%",newBrightness] : @"";
                 // Display the brighness level OSD
                 showBrightnessLevelPaneOnDisplay(newBrightnessInSubsteps, currentDisplayId);

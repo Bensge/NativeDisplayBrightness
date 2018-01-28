@@ -22,10 +22,10 @@
         <window title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" frameAutosaveName="Settings" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES"/>
-            <rect key="contentRect" x="196" y="700" width="532" height="209"/>
+            <rect key="contentRect" x="196" y="700" width="540" height="209"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="532" height="209"/>
+                <rect key="frame" x="0.0" y="0.0" width="540" height="209"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4gL-xr-cBN">

@@ -43,7 +43,7 @@
     APP_DELEGATE.showBrightness = sender.state;
     if (sender.state == NSControlStateValueOn) {
         APP_DELEGATE.statusBarIcon.title = [NSString stringWithFormat:@"%i%%",APP_DELEGATE.currentBrightness];
-        APP_DELEGATE.statusBarIcon.length = STATUS_ICON_WIDTH_TEXT;
+        APP_DELEGATE.statusBarIcon.length = APP_DELEGATE.currentBrightness == 100 ? STATUS_ICON_WIDTH_TEXT_100 : STATUS_ICON_WIDTH_TEXT;
     } else {
         APP_DELEGATE.statusBarIcon.title = @"";
         APP_DELEGATE.statusBarIcon.length = STATUS_ICON_WIDTH;

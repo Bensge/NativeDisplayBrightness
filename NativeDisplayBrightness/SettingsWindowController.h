@@ -10,4 +10,12 @@
 
 @interface SettingsWindowController : NSWindowController <NSWindowDelegate>
 
+@property (weak) IBOutlet NSButton *multiMonitor;
+@property (weak) IBOutlet NSButton *smoothStep;
+@property (weak) IBOutlet NSButton *showBrightness;
+@property (weak) IBOutlet NSPopUpButton *maxBrightness;
+@property (weak) IBOutlet NSButton *adjustTemp;
+@property (weak) IBOutlet NSSlider *tempLimit;
+
+
 @end

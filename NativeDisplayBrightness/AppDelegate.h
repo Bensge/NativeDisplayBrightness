@@ -75,6 +75,14 @@ static const int brightnessSubstepsCount = brightnessStepsCount * brightnessSubs
 @property (strong) BrightnessViewController *brightnessView;
 @property (assign) int currentBrightness;
 
+//Settings values
+@property (nonatomic, assign) BOOL multiMonitor;
+@property (nonatomic, assign) BOOL smoothStep;
+@property (nonatomic, assign) BOOL showBrightness;
+@property (nonatomic, assign) int maxBrightness;
+@property (nonatomic, assign) BOOL adjustTemp;
+@property (nonatomic, assign) int tempLimit;
+
 +(BOOL)loadSavedBrightness:(uint*) savedBrightness forDisplayID:(CGDirectDisplayID) displayID;
 +(void)changeMainScreenBrightnessWithStep:(int) deltaInSubsteps;
 +(void)changeMainScreenBrightness:(int) newBrightness;

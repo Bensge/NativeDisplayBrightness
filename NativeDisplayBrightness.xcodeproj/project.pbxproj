@@ -11,6 +11,7 @@
 		9DBE37541DB7990900ABE422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37531DB7990900ABE422 /* main.m */; };
 		9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37551DB7990900ABE422 /* Assets.xcassets */; };
 		9DBE37621DB7996100ABE422 /* DDC.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F8DB0B58201DE52F00991F83 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B57201DE52F00991F83 /* Readme.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,8 +25,8 @@
 		9DBE37601DB7996100ABE422 /* DDC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DDC.c; sourceTree = "<group>"; };
 		9DBE37611DB7996100ABE422 /* DDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDC.h; sourceTree = "<group>"; };
 		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
-		9DBE37641DB7A87200ABE422 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Readme.md; path = NativeDisplayBrightness/Readme.md; sourceTree = SOURCE_ROOT; };
 		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = License.txt; path = NativeDisplayBrightness/License.txt; sourceTree = SOURCE_ROOT; };
+		F8DB0B57201DE52F00991F83 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +79,7 @@
 		F8DB0B54201DE41300991F83 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				9DBE37641DB7A87200ABE422 /* Readme.md */,
+				F8DB0B57201DE52F00991F83 /* Readme.md */,
 				9DBE37661DB7A9D600ABE422 /* License.txt */,
 			);
 			name = Info;
@@ -163,6 +164,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8DB0B58201DE52F00991F83 /* Readme.md in Resources */,
 				9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

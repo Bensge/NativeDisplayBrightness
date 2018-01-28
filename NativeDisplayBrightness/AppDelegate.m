@@ -64,7 +64,7 @@ enum {
 
 static NSString *const kDisplaysBrightnessDefaultsKey = @"displays-brightness";
 static const int brightnessStepsCount = 16;
-static const int brightnessSubstepsPerStep = 4;
+static const int brightnessSubstepsPerStep = 6;
 static const int brightnessSubstepsCount = brightnessStepsCount * brightnessSubstepsPerStep;
 
 #pragma mark - variables
@@ -137,7 +137,8 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
         [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight
                                                         onDisplayID:displayId priority:OSDPriorityDefault
                                                       msecUntilFade:1000
-                                                     filledChiclets:(float)brightnessLevelInSubsteps totalChiclets:brightnessSubstepsCount
+                                                     filledChiclets:(float)brightnessLevelInSubsteps
+                                                      totalChiclets:brightnessSubstepsCount
                                                              locked:NO];
     }
     
@@ -193,7 +194,7 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
                 // Screen brightness adjustment
                 int brightnessDelta = isOptionModifierPressed ? 1 : brightnessSubstepsPerStep;
                 if (event.keyCode == BRIGHTNESS_DOWN_KEY) {
-                    // F1 = decrease broghtness
+                    // F1 = decrease brightness
                     brightnessDelta = -brightnessDelta;
                 }
                 
@@ -336,7 +337,7 @@ void shutdownSignalHandler(int signal)
         
         BOOL isCurrentBrighnessReadFromDefaults = NO;
         NSString* currentDisplayIdKey = [NSString stringWithFormat:@"%u", currentDisplayId];
-        NSDictionary* savedDisplayBrighnesses =  [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
+        NSDictionary* savedDisplayBrighnesses = [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
         if ([savedDisplayBrighnesses isKindOfClass:[NSDictionary class]]) {
             NSNumber* savedCurrentBrightness = savedDisplayBrighnesses [currentDisplayIdKey];
             if ([savedCurrentBrightness isKindOfClass:[NSNumber class]]) {
@@ -372,7 +373,7 @@ void shutdownSignalHandler(int signal)
                 if  (! isCurrentBrighnessAvailableFromDisplay) {
                     // Save the new brighness value
                     NSMutableDictionary* newDisplayBrighnesses;
-                    NSDictionary* savedDisplayBrighnesses =  [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
+                    NSDictionary* savedDisplayBrighnesses = [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
                     
                     if ([savedDisplayBrighnesses isKindOfClass:[NSDictionary class]]) {
                         newDisplayBrighnesses = [NSMutableDictionary dictionaryWithDictionary:savedDisplayBrighnesses];

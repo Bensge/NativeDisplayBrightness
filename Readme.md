@@ -2,7 +2,7 @@
 
 *Control your desktop monitor brightness just like on a MacBook!*
 
-![native brightness UI](https://raw.githubusercontent.com/KAMIKAZEUA/NativeDisplayBrightness/master/nativeUI.png)![menu UI](https://raw.githubusercontent.com/KAMIKAZEUA/NativeDisplayBrightness/master/Menu.png)
+![native brightness UI](https://raw.githubusercontent.com/KAMIKAZEUA/NativeDisplayBrightness/master/nativeUI.png)
 
 ![settings UI](https://raw.githubusercontent.com/KAMIKAZEUA/NativeDisplayBrightness/master/Settings.png)
 

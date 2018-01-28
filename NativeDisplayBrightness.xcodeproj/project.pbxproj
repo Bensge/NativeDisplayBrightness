@@ -24,8 +24,8 @@
 		9DBE37601DB7996100ABE422 /* DDC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DDC.c; sourceTree = "<group>"; };
 		9DBE37611DB7996100ABE422 /* DDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDC.h; sourceTree = "<group>"; };
 		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
-		9DBE37641DB7A87200ABE422 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = SOURCE_ROOT; };
-		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = SOURCE_ROOT; };
+		9DBE37641DB7A87200ABE422 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Readme.md; path = NativeDisplayBrightness/Readme.md; sourceTree = SOURCE_ROOT; };
+		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = License.txt; path = NativeDisplayBrightness/License.txt; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,17 +58,10 @@
 		9DBE374E1DB7990900ABE422 /* NativeDisplayBrightness */ = {
 			isa = PBXGroup;
 			children = (
-				9DBE374F1DB7990900ABE422 /* AppDelegate.h */,
-				9DBE37501DB7990900ABE422 /* AppDelegate.m */,
-				9DBE37551DB7990900ABE422 /* Assets.xcassets */,
-				9DBE375A1DB7990900ABE422 /* Info.plist */,
-				9DBE37601DB7996100ABE422 /* DDC.c */,
-				9DBE37641DB7A87200ABE422 /* Readme.md */,
-				9DBE37661DB7A9D600ABE422 /* License.txt */,
-				9DBE37611DB7996100ABE422 /* DDC.h */,
+				F8DB0B54201DE41300991F83 /* Info */,
+				F8DB0B56201DE44A00991F83 /* Classes */,
+				F8DB0B55201DE43A00991F83 /* Resources */,
 				9DBE37521DB7990900ABE422 /* Supporting Files */,
-				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
-				9D1F75421DBD44310039345A /* OSD.h */,
 			);
 			path = NativeDisplayBrightness;
 			sourceTree = "<group>";
@@ -76,9 +69,40 @@
 		9DBE37521DB7990900ABE422 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9DBE375A1DB7990900ABE422 /* Info.plist */,
 				9DBE37531DB7990900ABE422 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F8DB0B54201DE41300991F83 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				9DBE37641DB7A87200ABE422 /* Readme.md */,
+				9DBE37661DB7A9D600ABE422 /* License.txt */,
+			);
+			name = Info;
+			sourceTree = "<group>";
+		};
+		F8DB0B55201DE43A00991F83 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9DBE37551DB7990900ABE422 /* Assets.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F8DB0B56201DE44A00991F83 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				9DBE374F1DB7990900ABE422 /* AppDelegate.h */,
+				9DBE37501DB7990900ABE422 /* AppDelegate.m */,
+				9DBE37601DB7996100ABE422 /* DDC.c */,
+				9DBE37611DB7996100ABE422 /* DDC.h */,
+				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
+				9D1F75421DBD44310039345A /* OSD.h */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

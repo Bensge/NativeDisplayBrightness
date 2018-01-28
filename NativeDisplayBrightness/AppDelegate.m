@@ -129,7 +129,11 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     }
     else {
         // Sierra+
-        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight onDisplayID:displayId priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(float)brightnessLevelInSubsteps totalChiclets:brightnessSubstepsCount locked:NO];
+        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicBacklight
+                                                        onDisplayID:displayId priority:OSDPriorityDefault
+                                                      msecUntilFade:1000
+                                                     filledChiclets:(float)brightnessLevelInSubsteps totalChiclets:brightnessSubstepsCount
+                                                             locked:NO];
     }
     
 }

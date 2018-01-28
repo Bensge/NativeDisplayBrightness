@@ -2,7 +2,11 @@
 
 *Control your desktop monitor brightness just like on a MacBook!*
 
-![native brightness UI](https://raw.githubusercontent.com/Bensge/NativeDisplayBrightness/master/nativeUI.png)
+![native brightness UI](https://raw.githubusercontent.com/KAMIKAZEUA/NativeDisplayBrightness/master/nativeUI.png)
+
+![menu UI](https://raw.githubusercontent.com/KAMIKAZEUA/NativeDisplayBrightness/master/Menu.png)
+
+![settings UI](https://raw.githubusercontent.com/KAMIKAZEUA/NativeDisplayBrightness/master/Settings.png)
 
 This a utility application to control the brightness of an external monitor directly from your keyboard.
 

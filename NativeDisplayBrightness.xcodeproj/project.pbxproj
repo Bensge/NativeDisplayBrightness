@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,10 @@
 		9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37551DB7990900ABE422 /* Assets.xcassets */; };
 		9DBE37621DB7996100ABE422 /* DDC.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F8DB0B58201DE52F00991F83 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B57201DE52F00991F83 /* Readme.md */; };
+		F8DB0B61201DEAF300991F83 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */; };
+		F8DB0B62201DEAF300991F83 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B60201DEAF300991F83 /* SettingsWindowController.xib */; };
+		F8DB0B68201E008200991F83 /* BrightnessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DB0B66201E008200991F83 /* BrightnessViewController.m */; };
+		F8DB0B69201E008200991F83 /* BrightnessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B67201E008200991F83 /* BrightnessViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +31,12 @@
 		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
 		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = License.txt; path = NativeDisplayBrightness/License.txt; sourceTree = SOURCE_ROOT; };
 		F8DB0B57201DE52F00991F83 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = SOURCE_ROOT; };
+		F8DB0B5E201DEAF300991F83 /* SettingsWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
+		F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
+		F8DB0B60201DEAF300991F83 /* SettingsWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsWindowController.xib; sourceTree = "<group>"; };
+		F8DB0B65201E008200991F83 /* BrightnessViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrightnessViewController.h; sourceTree = "<group>"; };
+		F8DB0B66201E008200991F83 /* BrightnessViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrightnessViewController.m; sourceTree = "<group>"; };
+		F8DB0B67201E008200991F83 /* BrightnessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrightnessViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,12 @@
 				9DBE37611DB7996100ABE422 /* DDC.h */,
 				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
 				9D1F75421DBD44310039345A /* OSD.h */,
+				F8DB0B5E201DEAF300991F83 /* SettingsWindowController.h */,
+				F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */,
+				F8DB0B60201DEAF300991F83 /* SettingsWindowController.xib */,
+				F8DB0B65201E008200991F83 /* BrightnessViewController.h */,
+				F8DB0B66201E008200991F83 /* BrightnessViewController.m */,
+				F8DB0B67201E008200991F83 /* BrightnessViewController.xib */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -142,7 +158,7 @@
 				};
 			};
 			buildConfigurationList = 9DBE37471DB7990900ABE422 /* Build configuration list for PBXProject "NativeDisplayBrightness" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -165,6 +181,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8DB0B58201DE52F00991F83 /* Readme.md in Resources */,
+				F8DB0B69201E008200991F83 /* BrightnessViewController.xib in Resources */,
+				F8DB0B62201DEAF300991F83 /* SettingsWindowController.xib in Resources */,
 				9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,7 +195,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DBE37621DB7996100ABE422 /* DDC.c in Sources */,
+				F8DB0B68201E008200991F83 /* BrightnessViewController.m in Sources */,
 				9DBE37541DB7990900ABE422 /* main.m in Sources */,
+				F8DB0B61201DEAF300991F83 /* SettingsWindowController.m in Sources */,
 				9DBE37511DB7990900ABE422 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,11 +11,16 @@
 #import "BezelServices.h"
 #import "OSD.h"
 #include <dlfcn.h>
+#import "SettingsWindowController.h"
+#import "BrightnessViewController.h"
 
 #pragma mark - Key codes of special keys
 
 #define BRIGHTNESS_DOWN_KEY         kVK_F1
 #define BRIGHTNESS_UP_KEY           kVK_F2
+
+#define COLOR_TEMPERATURE_DOWN_KEY  kVK_F3
+#define COLOR_TEMPERATURE_UP_KEY    kVK_F4
 
 // Extract from Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
 /* keycodes for keys that are independent of keyboard layout*/
@@ -221,22 +226,44 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     [self _configureLoginItem];
     [self _registerSignalHandling];
     
+    //Status Bar Icon
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
-    self.statusItem = [bar statusItemWithLength:NSVariableStatusItemLength];
-    
+    self.statusBarIcon = [bar statusItemWithLength:NSVariableStatusItemLength];
     NSImage *icon = [NSImage imageNamed:@"icon"];
     icon.template = YES;
-    self.statusItem.image = icon;
-    self.statusItem.highlightMode = YES;
+    self.statusBarIcon.image = icon;
+    self.statusBarIcon.highlightMode = YES;
+
+    //Status Bar Menu:
+    self.statusBarMenu = [[NSMenu alloc] init];
     
-    NSMenu *menu = [[NSMenu alloc] init];
-    NSMenuItem *online = [[NSMenuItem alloc] initWithTitle:@"Quit"
+    //Brightness
+    NSMenuItem *brightness = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+    BrightnessViewController *brightnessView = [[BrightnessViewController alloc] initWithNibName:@"BrightnessViewController"
+                                                                                      bundle:nil];
+    [brightness setView:brightnessView.view];
+    [self.statusBarMenu addItem:brightness];
+    
+    [self.statusBarMenu addItem: [NSMenuItem separatorItem]];
+    
+    //Settings
+    NSMenuItem *settings = [[NSMenuItem alloc] initWithTitle:@"Settings"
+                                                  action:@selector(showSettings)
+                                           keyEquivalent:@""];
+    settings.target = self;
+    [self.statusBarMenu addItem:settings];
+    
+    //Quit
+    NSMenuItem *quit = [[NSMenuItem alloc] initWithTitle:@"Quit"
                                                     action:@selector(quitApp)
                                              keyEquivalent:@""];
-    online.target = self;
-    [menu addItem:online];
+    quit.target = self;
+    [self.statusBarMenu addItem:quit];
     
-    self.statusItem.menu = menu;
+    
+    
+    self.statusBarIcon.menu = self.statusBarMenu;
+    
     
     // If the process is trusted, register for keyboard events; otherwise wait for the user to declare the process trusted
     if (AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge NSString *)kAXTrustedCheckOptionPrompt: @true})) {
@@ -245,6 +272,12 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     else {
         [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(startMonitoringKeysIfProcessTrusted:) userInfo:nil repeats:YES];
     }
+}
+
+-(void) showSettings {
+    SettingsWindowController *settings = [[SettingsWindowController alloc] initWithWindowNibName:@"SettingsWindowController"];
+    [NSApp activateIgnoringOtherApps:YES];
+    [NSApp runModalForWindow:settings.window];
 }
 
 -(void) quitApp {
@@ -331,8 +364,8 @@ void shutdownSignalHandler(int signal)
            
             if (set_control(currentDisplayId, BRIGHTNESS, newBrightness)) {
                 
-                // NSLog(@"New brightness: %d", newBrightness);
-                
+                //NSLog(@"New brightness: %d", newBrightness);
+                self.statusBarIcon.title = [NSString stringWithFormat:@"%i%%",newBrightness];
                 // Display the brighness level OSD
                 showBrightnessLevelPaneOnDisplay(newBrightnessInSubsteps, currentDisplayId);
                 

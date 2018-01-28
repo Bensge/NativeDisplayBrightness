@@ -7,6 +7,7 @@
 //
 
 #import "BrightnessViewController.h"
+#import "AppDelegate.h"
 
 @interface BrightnessViewController ()
 
@@ -14,8 +15,24 @@
 
 @implementation BrightnessViewController
 
--(void) viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
+    
+    CGDirectDisplayID currentDisplayId = [NSScreen.mainScreen.deviceDescription [@"NSScreenNumber"] unsignedIntValue];
+    if (! CGDisplayIsBuiltin(currentDisplayId)) {
+        uint loadedBrightness = 50;
+        [AppDelegate loadSavedBrightness:&loadedBrightness forDisplayID:currentDisplayId];
+        self.sliderBrightness.integerValue = loadedBrightness;
+        lastBrightnessValue = loadedBrightness;
+    }
 }
+
+- (IBAction)changeBrightness:(NSSlider *)sender {
+    if (lastBrightnessValue != self.sliderBrightness.intValue) {
+        lastBrightnessValue = (int)self.sliderBrightness.intValue;
+        [AppDelegate changeMainScreenBrightness:lastBrightnessValue];
+    }
+}
+
 
 @end

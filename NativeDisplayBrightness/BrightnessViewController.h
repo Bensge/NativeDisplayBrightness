@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface BrightnessViewController : NSViewController
+@interface BrightnessViewController : NSViewController {
+    int lastBrightnessValue;
+}
+
+@property (weak) IBOutlet NSSlider *sliderBrightness;
+- (IBAction)changeBrightness:(NSSlider *)sender;
 
 @end

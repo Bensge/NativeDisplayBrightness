@@ -31,6 +31,7 @@
 		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
 		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = License.txt; path = NativeDisplayBrightness/License.txt; sourceTree = SOURCE_ROOT; };
 		F8197A22201E818A0006516C /* CBBlueLightClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBBlueLightClient.h; sourceTree = "<group>"; };
+		F8A8C8E4201F7F1600F49C15 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		F8DB0B57201DE52F00991F83 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = SOURCE_ROOT; };
 		F8DB0B5E201DEAF300991F83 /* SettingsWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
 		F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 		F8DB0B56201DE44A00991F83 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F8A8C8E4201F7F1600F49C15 /* Config.h */,
 				9DBE374F1DB7990900ABE422 /* AppDelegate.h */,
 				9DBE37501DB7990900ABE422 /* AppDelegate.m */,
 				9DBE37601DB7996100ABE422 /* DDC.c */,

@@ -63,6 +63,11 @@
 - (IBAction)adjustColorTemperature:(NSButton *)sender {
     APP_DELEGATE.adjustColorTemperature = sender.state;
     self.colorTemperatureLimit.enabled = sender.state;
+    if (!sender.state) {
+        [APP_DELEGATE.statusBarMenu removeItem:APP_DELEGATE.colorTemperatureMenu];
+    } else {
+        [APP_DELEGATE.statusBarMenu insertItem:APP_DELEGATE.colorTemperatureMenu atIndex:1];
+    }
 }
 
 - (IBAction)colorTemperatureLimit:(NSSlider *)sender {

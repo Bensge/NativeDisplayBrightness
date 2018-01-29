@@ -17,14 +17,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.adjustColorTemperature.state = APP_DELEGATE.adjustColorTemperature;
+    StatusData status;
+    [APP_DELEGATE.blueLight getBlueLightStatus:&status];
+    if (status.enabled) {
+        self.adjustColorTemperature.state = NSOnState;
+    } else {
+        self.adjustColorTemperature.state = NSOffState;
+    }
     self.sliderColorTemperature.maxValue = APP_DELEGATE.colorTemperatureLimit;
 }
 
-- (IBAction)adjustColorTemperature:(NSButton *)sender {
-    APP_DELEGATE.adjustColorTemperature = sender.state;
+- (IBAction)enableColorTemperature:(NSButton *)sender {
+    [APP_DELEGATE.blueLight setEnabled:sender.state];
+    self.sliderColorTemperature.enabled = sender.state;
 }
-
 
 - (IBAction)changeColorTemperature:(NSSlider *)sender {
     [AppDelegate changeScreenColorTemperature:sender.floatValue];

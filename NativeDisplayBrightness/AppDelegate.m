@@ -153,8 +153,9 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
             }
             
             if (event.keyCode == COLOR_TEMPERATURE_UP_KEY || event.keyCode == COLOR_TEMPERATURE_DOWN_KEY) {
-                NSLog(@"@%i",event.keyCode);
-                [AppDelegate changeScreenColorTemperature:1];
+                float valueStep = COLOR_TEMPERATURE_STEP;
+                valueStep = (event.keyCode == COLOR_TEMPERATURE_DOWN_KEY) ? -valueStep : valueStep;
+                [AppDelegate changeScreenColorTemperatureStep:valueStep];
             }
         }
     }];
@@ -213,7 +214,7 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
         self.statusBarIcon.title = self.showBrightness ? [NSString stringWithFormat:@"%d%%",loadedBrightness] : @"";
     }
     
-    //Status Bar Menu:
+    //Status Bar Menu
     self.statusBarMenu = [[NSMenu alloc] init];
     
     //Brightness
@@ -226,10 +227,23 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     [self.statusBarMenu addItem: [NSMenuItem separatorItem]];
     
     //Color Temperature
-    NSMenuItem *colorTemperature = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+    self.colorTemperatureMenu = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
     self.colorTemperatureView = [[ColorTemperatureViewController alloc] initWithNibName:@"ColorTemperatureViewController" bundle:nil];
-    [colorTemperature setView:self.colorTemperatureView.view];
-    [self.statusBarMenu addItem:colorTemperature];
+    [self.colorTemperatureMenu setView:self.colorTemperatureView.view];
+    [self.statusBarMenu addItem:self.colorTemperatureMenu];
+    
+    //this for some reason not work..will just remove
+    //self.colorTemperatureMenu.hidden = !APP_DELEGATE.adjustColorTemperature;
+    
+    StatusData status;
+    [self.blueLight getBlueLightStatus:&status];
+    if (!status.enabled) {
+        [self.statusBarMenu removeItem:self.colorTemperatureMenu];
+    } else {
+        float curStrength;
+        [self.blueLight getStrength:&curStrength];
+        self.colorTemperatureView.sliderColorTemperature.floatValue = curStrength;
+    }
     
     //Separator
     [self.statusBarMenu addItem: [NSMenuItem separatorItem]];
@@ -482,8 +496,16 @@ void shutdownSignalHandler(int signal)
     }
 }
 
+
 +(void)changeScreenColorTemperature:(float) colorTemperature {
-    APP_DELEGATE.colorTemperature = colorTemperature;
+    [APP_DELEGATE.blueLight setStrength:colorTemperature commit:YES];
+    APP_DELEGATE.colorTemperatureView.sliderColorTemperature.floatValue = colorTemperature;
 }
 
++(void)changeScreenColorTemperatureStep:(float) colorTemperatureStep {
+    APP_DELEGATE.colorTemperatureView.sliderColorTemperature.floatValue += colorTemperatureStep;
+    [APP_DELEGATE.blueLight setStrength: APP_DELEGATE.colorTemperatureView.sliderColorTemperature.floatValue
+                                 commit: YES];
+    NSLog(@"Color Temperature Strength: %f",APP_DELEGATE.colorTemperatureView.sliderColorTemperature.floatValue);
+}
 @end

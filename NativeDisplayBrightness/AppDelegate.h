@@ -21,6 +21,7 @@
 
 @property (strong) CBBlueLightClient *blueLight;
 @property (strong) ColorTemperatureViewController *colorTemperatureView;
+@property (strong) NSMenuItem *colorTemperatureMenu;
 
 //runtime variables
 @property (assign) int currentBrightness;
@@ -33,13 +34,16 @@
 @property (nonatomic, assign) int maxBrightness;
 
 @property (nonatomic, assign) BOOL adjustColorTemperature;
-@property (nonatomic, assign) float colorTemperature; //this only shows in slider in menu
 @property (nonatomic, assign) float colorTemperatureLimit;
 
 +(BOOL)loadSavedBrightness:(uint*) savedBrightness forDisplayID:(CGDirectDisplayID) displayID;
-+(void)changeMainScreenBrightnessWithStep:(int) deltaInSubsteps;
+
 +(void)changeMainScreenBrightness:(int) newBrightness;
++(void)changeMainScreenBrightnessWithStep:(int) deltaInSubsteps;
+
+
 +(void)changeScreenColorTemperature:(float) colorTemperature;
++(void)changeScreenColorTemperatureStep:(float) colorTemperatureStep;
 
 @end
 

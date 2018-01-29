@@ -11,6 +11,9 @@
 		9DBE37541DB7990900ABE422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37531DB7990900ABE422 /* main.m */; };
 		9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37551DB7990900ABE422 /* Assets.xcassets */; };
 		9DBE37621DB7996100ABE422 /* DDC.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F8A8C8E7201F925800F49C15 /* CoreBrightness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A8C8E6201F925800F49C15 /* CoreBrightness.framework */; };
+		F8A8C8EB201F98CF00F49C15 /* ColorTemperatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A8C8E9201F98CF00F49C15 /* ColorTemperatureViewController.m */; };
+		F8A8C8EC201F98CF00F49C15 /* ColorTemperatureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A8C8EA201F98CF00F49C15 /* ColorTemperatureViewController.xib */; };
 		F8DB0B58201DE52F00991F83 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B57201DE52F00991F83 /* Readme.md */; };
 		F8DB0B61201DEAF300991F83 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */; };
 		F8DB0B62201DEAF300991F83 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B60201DEAF300991F83 /* SettingsWindowController.xib */; };
@@ -32,6 +35,10 @@
 		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = License.txt; path = NativeDisplayBrightness/License.txt; sourceTree = SOURCE_ROOT; };
 		F8197A22201E818A0006516C /* CBBlueLightClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBBlueLightClient.h; sourceTree = "<group>"; };
 		F8A8C8E4201F7F1600F49C15 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		F8A8C8E6201F925800F49C15 /* CoreBrightness.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBrightness.framework; path = ../../../System/Library/PrivateFrameworks/CoreBrightness.framework; sourceTree = "<group>"; };
+		F8A8C8E8201F98CF00F49C15 /* ColorTemperatureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorTemperatureViewController.h; sourceTree = "<group>"; };
+		F8A8C8E9201F98CF00F49C15 /* ColorTemperatureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorTemperatureViewController.m; sourceTree = "<group>"; };
+		F8A8C8EA201F98CF00F49C15 /* ColorTemperatureViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorTemperatureViewController.xib; sourceTree = "<group>"; };
 		F8DB0B57201DE52F00991F83 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = SOURCE_ROOT; };
 		F8DB0B5E201DEAF300991F83 /* SettingsWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
 		F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
@@ -46,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A8C8E7201F925800F49C15 /* CoreBrightness.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +65,7 @@
 			children = (
 				9DBE374E1DB7990900ABE422 /* NativeDisplayBrightness */,
 				9DBE374D1DB7990900ABE422 /* Products */,
+				F8A8C8E5201F925800F49C15 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,6 +95,14 @@
 				9DBE37531DB7990900ABE422 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F8A8C8E5201F925800F49C15 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F8A8C8E6201F925800F49C15 /* CoreBrightness.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F8DB0B54201DE41300991F83 /* Info */ = {
@@ -122,6 +139,9 @@
 				F8DB0B65201E008200991F83 /* BrightnessViewController.h */,
 				F8DB0B66201E008200991F83 /* BrightnessViewController.m */,
 				F8DB0B67201E008200991F83 /* BrightnessViewController.xib */,
+				F8A8C8E8201F98CF00F49C15 /* ColorTemperatureViewController.h */,
+				F8A8C8E9201F98CF00F49C15 /* ColorTemperatureViewController.m */,
+				F8A8C8EA201F98CF00F49C15 /* ColorTemperatureViewController.xib */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -184,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A8C8EC201F98CF00F49C15 /* ColorTemperatureViewController.xib in Resources */,
 				F8DB0B58201DE52F00991F83 /* Readme.md in Resources */,
 				F8DB0B69201E008200991F83 /* BrightnessViewController.xib in Resources */,
 				F8DB0B62201DEAF300991F83 /* SettingsWindowController.xib in Resources */,
@@ -200,6 +221,7 @@
 			files = (
 				9DBE37621DB7996100ABE422 /* DDC.c in Sources */,
 				F8DB0B68201E008200991F83 /* BrightnessViewController.m in Sources */,
+				F8A8C8EB201F98CF00F49C15 /* ColorTemperatureViewController.m in Sources */,
 				9DBE37541DB7990900ABE422 /* main.m in Sources */,
 				F8DB0B61201DEAF300991F83 /* SettingsWindowController.m in Sources */,
 				9DBE37511DB7990900ABE422 /* AppDelegate.m in Sources */,
@@ -301,6 +323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
 				INFOPLIST_FILE = NativeDisplayBrightness/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -314,6 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
 				INFOPLIST_FILE = NativeDisplayBrightness/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;

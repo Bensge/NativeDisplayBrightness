@@ -14,8 +14,8 @@
 @property (weak) IBOutlet NSButton *smoothStep;
 @property (weak) IBOutlet NSButton *showBrightness;
 @property (weak) IBOutlet NSPopUpButton *maxBrightness;
-@property (weak) IBOutlet NSButton *adjustTemp;
-@property (weak) IBOutlet NSSlider *tempLimit;
+@property (weak) IBOutlet NSButton *adjustColorTemperature;
+@property (weak) IBOutlet NSSlider *colorTemperatureLimit;
 
 
 @end

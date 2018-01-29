@@ -13,6 +13,7 @@
 #include <dlfcn.h>
 #import "SettingsWindowController.h"
 #import "BrightnessViewController.h"
+#import "ColorTemperatureViewController.h"
 
 #pragma mark - variables
 
@@ -64,7 +65,8 @@ static CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     if (type == NX_KEYDOWN || type == NX_KEYUP || type == NX_FLAGSCHANGED)
     {
         int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-        if (keyCode == BRIGHTNESS_UP_KEY || keyCode == BRIGHTNESS_DOWN_KEY)
+        if (keyCode == BRIGHTNESS_UP_KEY || keyCode == BRIGHTNESS_DOWN_KEY ||
+            keyCode == COLOR_TEMPERATURE_UP_KEY || keyCode == COLOR_TEMPERATURE_DOWN_KEY)
         {
             return NULL;
         }
@@ -149,6 +151,11 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
                     [AppDelegate changeMainScreenBrightnessWithStep: brightnessDelta];
                 });
             }
+            
+            if (event.keyCode == COLOR_TEMPERATURE_UP_KEY || event.keyCode == COLOR_TEMPERATURE_DOWN_KEY) {
+                NSLog(@"@%i",event.keyCode);
+                [AppDelegate changeScreenColorTemperature:1];
+            }
         }
     }];
     
@@ -180,6 +187,10 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     [self _configureLoginItem];
     [self _registerSignalHandling];
     
+    //Color Temperature
+    self.blueLight = [[CBBlueLightClient alloc] init];
+    self.supportsBlueLightReduction = [CBBlueLightClient supportsBlueLightReduction];
+    
     //Status Bar Icon
     NSStatusBar *bar = [NSStatusBar systemStatusBar];
     self.statusBarIcon = [bar statusItemWithLength:self.showBrightness ? STATUS_ICON_WIDTH_TEXT : STATUS_ICON_WIDTH];
@@ -210,7 +221,17 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     self.brightnessView = [[BrightnessViewController alloc] initWithNibName:@"BrightnessViewController" bundle:nil];
     [brightness setView:self.brightnessView.view];
     [self.statusBarMenu addItem:brightness];
+
+    //Separator
+    [self.statusBarMenu addItem: [NSMenuItem separatorItem]];
     
+    //Color Temperature
+    NSMenuItem *colorTemperature = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+    self.colorTemperatureView = [[ColorTemperatureViewController alloc] initWithNibName:@"ColorTemperatureViewController" bundle:nil];
+    [colorTemperature setView:self.colorTemperatureView.view];
+    [self.statusBarMenu addItem:colorTemperature];
+    
+    //Separator
     [self.statusBarMenu addItem: [NSMenuItem separatorItem]];
     
     //Settings
@@ -338,28 +359,41 @@ void shutdownSignalHandler(int signal)
     return [maxBrightness intValue];
 }
 
-- (void)setAdjustTemp:(BOOL)adjustTemp {
-    [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithBool:adjustTemp] forKey:@"adjustTemp"];
+- (void)setAdjustColorTemperature:(BOOL)adjustColorTemperature {
+    [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithBool:adjustColorTemperature] forKey:@"adjustColorTemperature"];
 }
 
-- (BOOL)adjustTemp {
-    id adjustTemp = [NSUserDefaults.standardUserDefaults valueForKey:@"adjustTemp"];
-    if(!adjustTemp) {
+- (BOOL)adjustColorTemperature {
+    id adjustColorTemperature = [NSUserDefaults.standardUserDefaults valueForKey:@"adjustColorTemperature"];
+    if(!adjustColorTemperature) {
         return NO;
     }
-    return [adjustTemp boolValue];
+    return [adjustColorTemperature boolValue];
 }
 
-- (void)setTempLimit:(int)tempLimit {
-    [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithInt:tempLimit] forKey:@"tempLimit"];
-}
-
-- (int)tempLimit {
-    id tempLimit = [NSUserDefaults.standardUserDefaults valueForKey:@"tempLimit"];
-    if(!tempLimit) {
-        return 1;
+- (float)colorTemperature {
+    id colorTemperature = [NSUserDefaults.standardUserDefaults valueForKey:@"colorTemperature"];
+    if(!colorTemperature) {
+        return 0.0;
     }
-    return [tempLimit intValue];
+    return [colorTemperature floatValue];
+}
+
+- (void)setColorTemperature:(float)colorTemperature {
+    [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithFloat:self.colorTemperature] forKey:@"colorTemperature"];
+}
+
+- (void)setColorTemperatureLimit:(float)colorTemperatureLimit {
+    self.colorTemperatureView.sliderColorTemperature.maxValue = colorTemperatureLimit;
+    [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithFloat:colorTemperatureLimit] forKey:@"colorTemperatureLimit"];
+}
+
+- (float)colorTemperatureLimit {
+    id colorTemperatureLimit = [NSUserDefaults.standardUserDefaults valueForKey:@"colorTemperatureLimit"];
+    if(!colorTemperatureLimit) {
+        return 0.5;
+    }
+    return [colorTemperatureLimit floatValue];
 }
 
 + (void)saveBrightness:(int) newBrightness forDisplayID:(CGDirectDisplayID) displayID  {
@@ -446,6 +480,10 @@ void shutdownSignalHandler(int signal)
             [AppDelegate saveBrightness:newBrightness forDisplayID:currentDisplayId];
         }
     }
+}
+
++(void)changeScreenColorTemperature:(float) colorTemperature {
+    APP_DELEGATE.colorTemperature = colorTemperature;
 }
 
 @end

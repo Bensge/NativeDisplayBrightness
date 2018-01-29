@@ -7,7 +7,7 @@
 //
 
 #import "SettingsWindowController.h"
-#import "AppDelegate.h"
+#import "Config.h"
 
 @interface SettingsWindowController ()
 
@@ -22,9 +22,15 @@
     self.smoothStep.state = APP_DELEGATE.smoothStep;
     self.showBrightness.state = APP_DELEGATE.showBrightness;
     [self.maxBrightness selectItemWithTag: APP_DELEGATE.maxBrightness];
-    self.adjustTemp.state = APP_DELEGATE.adjustTemp;
-    self.tempLimit.intValue = APP_DELEGATE.tempLimit;
-    self.tempLimit.enabled = self.adjustTemp.state;
+    self.adjustColorTemperature.state = APP_DELEGATE.adjustColorTemperature;
+    self.colorTemperatureLimit.floatValue = APP_DELEGATE.colorTemperatureLimit;
+    self.colorTemperatureLimit.enabled = self.adjustColorTemperature.state;
+    
+    //system not supports it, disable all controls
+    if (!APP_DELEGATE.supportsBlueLightReduction) {
+        self.adjustColorTemperature.enabled = NO;
+        self.colorTemperatureLimit.enabled = NO;
+    }
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
@@ -54,13 +60,13 @@
     APP_DELEGATE.maxBrightness = (int)sender.selectedTag;
 }
 
-- (IBAction)adjustColorTemp:(NSButton *)sender {
-    APP_DELEGATE.adjustTemp = sender.state;
-    self.tempLimit.enabled = sender.state;
+- (IBAction)adjustColorTemperature:(NSButton *)sender {
+    APP_DELEGATE.adjustColorTemperature = sender.state;
+    self.colorTemperatureLimit.enabled = sender.state;
 }
 
-- (IBAction)tempLimit:(NSSlider *)sender {
-    APP_DELEGATE.tempLimit = sender.intValue;
+- (IBAction)colorTemperatureLimit:(NSSlider *)sender {
+    APP_DELEGATE.colorTemperatureLimit = sender.floatValue;
 }
 
 

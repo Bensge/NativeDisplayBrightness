@@ -8,12 +8,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SettingsWindowController">
             <connections>
-                <outlet property="adjustTemp" destination="DUY-Jb-of5" id="4q7-0c-dhc"/>
+                <outlet property="adjustColorTemperature" destination="DUY-Jb-of5" id="b4R-Ce-cp0"/>
+                <outlet property="colorTemperatureLimit" destination="W0A-Sk-P47" id="W6z-cm-uUV"/>
                 <outlet property="maxBrightness" destination="7uW-ra-hsZ" id="AKS-Hx-beh"/>
                 <outlet property="multiMonitor" destination="4gL-xr-cBN" id="3AV-58-Kal"/>
                 <outlet property="showBrightness" destination="w6D-g4-Tpn" id="pNX-Tc-avt"/>
                 <outlet property="smoothStep" destination="VKi-KS-UDf" id="Mfi-qU-bGt"/>
-                <outlet property="tempLimit" destination="W0A-Sk-P47" id="gxa-7L-uaR"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -69,7 +69,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="adjustColorTemp:" target="-2" id="CWm-dM-PxQ"/>
+                            <action selector="adjustColorTemperature:" target="-2" id="0Jh-3Z-SHM"/>
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7uW-ra-hsZ">
@@ -123,9 +123,9 @@
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W0A-Sk-P47">
                         <rect key="frame" x="223" y="41" width="239" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="44" tickMarkPosition="below" numberOfTickMarks="3" sliderType="linear" id="gH5-NO-Uw4"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="3" sliderType="linear" id="gH5-NO-Uw4"/>
                         <connections>
-                            <action selector="tempLimit:" target="-2" id="lJX-V6-noR"/>
+                            <action selector="colorTemperatureLimit:" target="-2" id="sQP-xy-N1o"/>
                         </connections>
                     </slider>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b4W-Pd-5JH">
@@ -142,7 +142,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-35" y="118.5"/>
+            <point key="canvasLocation" x="-298" y="133"/>
         </window>
     </objects>
 </document>

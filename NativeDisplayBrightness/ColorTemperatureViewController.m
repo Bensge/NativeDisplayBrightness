@@ -23,6 +23,7 @@
         self.adjustColorTemperature.state = NSOnState;
     } else {
         self.adjustColorTemperature.state = NSOffState;
+        self.sliderColorTemperature.enabled = NO;
     }
     self.sliderColorTemperature.maxValue = APP_DELEGATE.colorTemperatureLimit;
 }

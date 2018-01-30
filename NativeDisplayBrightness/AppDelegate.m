@@ -235,9 +235,7 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
     //this for some reason not work..will just remove
     //self.colorTemperatureMenu.hidden = !APP_DELEGATE.adjustColorTemperature;
     
-    StatusData status;
-    [self.blueLight getBlueLightStatus:&status];
-    if (!status.enabled) {
+    if (!APP_DELEGATE.adjustColorTemperature) {
         [self.statusBarMenu removeItem:self.colorTemperatureMenu];
     } else {
         float curStrength;

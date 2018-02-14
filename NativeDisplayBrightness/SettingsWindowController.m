@@ -24,7 +24,7 @@
     [self.maxBrightness selectItemWithTag: APP_DELEGATE.maxBrightness];
     self.adjustColorTemperature.state = APP_DELEGATE.adjustColorTemperature;
     self.colorTemperatureLimit.floatValue = APP_DELEGATE.colorTemperatureLimit;
-    self.colorTemperatureLimit.enabled = self.adjustColorTemperature.state;
+    [self updateColorTemperatureStates:self.adjustColorTemperature.state];
     
     //system not supports it, disable all controls
     if (!APP_DELEGATE.supportsBlueLightReduction) {
@@ -62,7 +62,8 @@
 
 - (IBAction)adjustColorTemperature:(NSButton *)sender {
     APP_DELEGATE.adjustColorTemperature = sender.state;
-    self.colorTemperatureLimit.enabled = sender.state;
+    [self updateColorTemperatureStates:sender.state];
+    
     if (!sender.state) {
         [APP_DELEGATE.statusBarMenu removeItem:APP_DELEGATE.colorTemperatureMenu];
     } else {
@@ -74,5 +75,23 @@
     APP_DELEGATE.colorTemperatureLimit = sender.floatValue;
 }
 
+- (void)updateColorTemperatureStates:(bool) state {
+    
+    NSColor *color = state ? [NSColor textColor] : [NSColor disabledControlTextColor];
+    
+    self.colorTemperatureLimit.enabled = state;
+    
+    self.colorTemperatureLimitLabel.textColor = color;
+    self.colorTemperatureLimit.enabled = state;
+    
+    self.colorTemperatureLessWarmLabel.textColor = color;
+    self.colorTemperatureMoreWarmLabel.textColor = color;
+    
+    self.colorTemperatureLessWarmKeyLabel.textColor = color;
+    self.colorTemperatureLessWarmKey.enabled = state;
+    
+    self.colorTemperatureMoreWarmKeyLabel.textColor = color;
+    self.colorTemperatureMoreWarmKey.enabled = state;
+}
 
 @end

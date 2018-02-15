@@ -10,7 +10,7 @@ This a utility application to control the brightness of an external monitor dire
 
 Use the `F1` /  `F2` key to decrease / increase the brightness of the external monitor. If you have an Apple or similar keyboard, you probably need to also press the `fn` key.
 
-For a finer brightness level adjustment, you add the option key, i.e use `alt` + `F1` to decrease the brightness, or  `alt` + `F2` to increase it.
+For a finer brightness level adjustment, you add the option key, i.e use `alt` + `F1` to decrease the brightness, or  `alt` + `F2` to increase it. Also you can enable smooth step in the settings. 
 
 This app  shows the **native** system UI when changing brightness! It uses the private `BezelServices` framework for this.
 
@@ -26,7 +26,7 @@ If you have multiple external monitors connected to your Mac, the brightness adj
 
 ## Requirements
 
-macOS version: 10.10 to 10.13
+macOS version: 10.12.4 or later
 
 ## License
 

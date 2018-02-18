@@ -13,11 +13,6 @@
 
 #pragma mark - Key codes of special keys
 
-#define BRIGHTNESS_DOWN_KEY         kVK_F1
-#define BRIGHTNESS_UP_KEY           kVK_F2
-
-#define COLOR_TEMPERATURE_DOWN_KEY  kVK_F3
-#define COLOR_TEMPERATURE_UP_KEY    kVK_F4
 #define COLOR_TEMPERATURE_STEP      0.01
 
 #define APP_DELEGATE                ((AppDelegate *)[[NSApplication sharedApplication] delegate])

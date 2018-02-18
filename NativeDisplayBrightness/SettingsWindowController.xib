@@ -141,10 +141,10 @@
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLe-Df-5Oc">
                         <rect key="frame" x="232" y="243" width="77" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kQD-pW-Kv0" id="KnE-uG-IKu">
+                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="kQD-pW-Kv0" id="KnE-uG-IKu">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="7Eo-pc-AYz">
+                            <menu key="menu" autoenablesItems="NO" id="7Eo-pc-AYz">
                                 <items>
                                     <menuItem title="F1" state="on" id="kQD-pW-Kv0"/>
                                     <menuItem title="F3" id="Tsd-UJ-fh8"/>
@@ -153,6 +153,9 @@
                                 </items>
                             </menu>
                         </popUpButtonCell>
+                        <connections>
+                            <action selector="changeDecreaseBrightnessKey:" target="-2" id="ORv-KY-oey"/>
+                        </connections>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="56p-Sh-Oz1">
                         <rect key="frame" x="127" y="53" width="101" height="17"/>
@@ -166,10 +169,10 @@
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ka3-yX-Tak">
                         <rect key="frame" x="232" y="48" width="77" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7f4-yt-FLf" id="v6q-W3-pyq">
+                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="7f4-yt-FLf" id="v6q-W3-pyq">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="9hN-Y2-VLx">
+                            <menu key="menu" autoenablesItems="NO" id="9hN-Y2-VLx">
                                 <items>
                                     <menuItem title="F1" id="7f4-yt-FLf"/>
                                     <menuItem title="F2" id="hpJ-JF-2YX"/>
@@ -178,6 +181,9 @@
                                 </items>
                             </menu>
                         </popUpButtonCell>
+                        <connections>
+                            <action selector="changeColorTemperatureLessWarmKey:" target="-2" id="UA7-4q-hMi"/>
+                        </connections>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nc-7O-FbP">
                         <rect key="frame" x="124" y="22" width="104" height="17"/>
@@ -191,10 +197,10 @@
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbU-HZ-NXj">
                         <rect key="frame" x="232" y="17" width="77" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="F4" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="rIs-In-Hcf" id="htD-ey-ju8">
+                        <popUpButtonCell key="cell" type="push" title="F4" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="rIs-In-Hcf" id="htD-ey-ju8">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="OdB-Qo-1NC">
+                            <menu key="menu" autoenablesItems="NO" id="OdB-Qo-1NC">
                                 <items>
                                     <menuItem title="F1" id="7nd-5e-nko"/>
                                     <menuItem title="F2" id="HUx-wy-mnN"/>
@@ -203,6 +209,9 @@
                                 </items>
                             </menu>
                         </popUpButtonCell>
+                        <connections>
+                            <action selector="changeColorTemperatureMoreWarmKey:" target="-2" id="IrF-lv-WSv"/>
+                        </connections>
                     </popUpButton>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="5QX-91-Hp1">
                         <rect key="frame" x="12" y="281" width="516" height="4"/>
@@ -241,10 +250,10 @@
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgU-58-JSV">
                         <rect key="frame" x="232" y="212" width="77" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="QH0-RX-jXd" id="7j9-3l-Nzc">
+                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="QH0-RX-jXd" id="7j9-3l-Nzc">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="Lym-X2-R3i">
+                            <menu key="menu" autoenablesItems="NO" id="Lym-X2-R3i">
                                 <items>
                                     <menuItem title="F1" state="on" id="QH0-RX-jXd"/>
                                     <menuItem title="F2" id="txS-jf-34P"/>
@@ -253,6 +262,9 @@
                                 </items>
                             </menu>
                         </popUpButtonCell>
+                        <connections>
+                            <action selector="changeIncreaseBrightnessKey:" target="-2" id="Snn-GJ-L33"/>
+                        </connections>
                     </popUpButton>
                 </subviews>
             </view>

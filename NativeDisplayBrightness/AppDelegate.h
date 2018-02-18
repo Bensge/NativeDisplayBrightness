@@ -13,9 +13,9 @@
 @class BrightnessViewController;
 @class ColorTemperatureViewController;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate> {
-    NSDictionary *keys;
-}
+@interface AppDelegate : NSObject <NSApplicationDelegate>
+
+@property (strong) NSDictionary *keys;
 
 @property (strong) NSStatusItem *statusBarIcon;
 @property (strong) NSMenu *statusBarMenu;
@@ -35,14 +35,14 @@
 @property (nonatomic, assign) BOOL showBrightness;
 @property (nonatomic, assign) int maxBrightness;
 
-@property (nonatomic, strong) NSString *increaseBrightnessKeyCode;
-@property (nonatomic, strong) NSString *decreaseBrightnessKeyCode;
+@property (nonatomic, strong) NSString *increaseBrightnessKey;
+@property (nonatomic, strong) NSString *decreaseBrightnessKey;
 
 @property (nonatomic, assign) BOOL adjustColorTemperature;
 @property (nonatomic, assign) float colorTemperatureLimit;
 
-@property (nonatomic, strong) NSString *colorTemperatureLessWarmKeyCode;
-@property (nonatomic, strong) NSString *colorTemperatureMoreWarmKeyCode;
+@property (nonatomic, strong) NSString *colorTemperatureLessWarmKey;
+@property (nonatomic, strong) NSString *colorTemperatureMoreWarmKey;
 
 +(BOOL)loadSavedBrightness:(uint*) savedBrightness forDisplayID:(CGDirectDisplayID) displayID;
 

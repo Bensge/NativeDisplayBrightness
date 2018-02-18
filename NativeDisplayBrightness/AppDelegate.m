@@ -65,10 +65,10 @@ static CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     if (type == NX_KEYDOWN || type == NX_KEYUP || type == NX_FLAGSCHANGED)
     {
         int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-        if (keyCode == BRIGHTNESS_UP_KEY ||
-            keyCode == BRIGHTNESS_DOWN_KEY ||
-            keyCode == COLOR_TEMPERATURE_UP_KEY ||
-            keyCode == COLOR_TEMPERATURE_DOWN_KEY)
+        if (keyCode == [[APP_DELEGATE.keys valueForKey:APP_DELEGATE.increaseBrightnessKey] unsignedShortValue] ||
+            keyCode == [[APP_DELEGATE.keys valueForKey:APP_DELEGATE.decreaseBrightnessKey] unsignedShortValue] ||
+            keyCode == [[APP_DELEGATE.keys valueForKey:APP_DELEGATE.colorTemperatureLessWarmKey] unsignedShortValue] ||
+            keyCode == [[APP_DELEGATE.keys valueForKey:APP_DELEGATE.colorTemperatureMoreWarmKey] unsignedShortValue])
         {
             return NULL;
         }
@@ -140,12 +140,12 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
         {
             BOOL isOptionModifierPressed = (event.modifierFlags & NSAlternateKeyMask) != 0 || self.smoothStep;
             
-            if ((event.keyCode == [[keys valueForKey:self.decreaseBrightnessKeyCode] unsignedShortValue]) ||
-                (event.keyCode == [[keys valueForKey:self.increaseBrightnessKeyCode] unsignedShortValue]))
+            if ((event.keyCode == [[self.keys valueForKey:self.decreaseBrightnessKey] unsignedShortValue]) ||
+                (event.keyCode == [[self.keys valueForKey:self.increaseBrightnessKey] unsignedShortValue]))
             {
                 // Screen brightness adjustment
                 int brightnessDelta = isOptionModifierPressed ? 1 : brightnessSubstepsPerStep;
-                if (event.keyCode == [[keys valueForKey:self.decreaseBrightnessKeyCode] unsignedShortValue]) {
+                if (event.keyCode == [[self.keys valueForKey:self.decreaseBrightnessKey] unsignedShortValue]) {
                     // default F1 = decrease brightness
                     brightnessDelta = -brightnessDelta;
                 }
@@ -155,10 +155,10 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
                 });
             }
             
-            if (event.keyCode == [[keys valueForKey:self.colorTemperatureLessWarmKeyCode] unsignedShortValue] ||
-                event.keyCode == [[keys valueForKey:self.colorTemperatureMoreWarmKeyCode] unsignedShortValue]) {
+            if (event.keyCode == [[self.keys valueForKey:self.colorTemperatureLessWarmKey] unsignedShortValue] ||
+                event.keyCode == [[self.keys valueForKey:self.colorTemperatureMoreWarmKey] unsignedShortValue]) {
                 float valueStep = COLOR_TEMPERATURE_STEP;
-                valueStep = (event.keyCode == [[keys valueForKey:self.colorTemperatureLessWarmKeyCode] unsignedShortValue]) ? -valueStep : valueStep;
+                valueStep = (event.keyCode == [[self.keys valueForKey:self.colorTemperatureLessWarmKey] unsignedShortValue]) ? -valueStep : valueStep;
                 [AppDelegate changeScreenColorTemperatureStep:valueStep];
             }
         }
@@ -180,33 +180,33 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     
-    //DEBUG: clean user settings if needed
-    //    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-    //    [NSApp terminate:0];
+//DEBUG: clean user settings if needed
+//    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//    [NSApp terminate:0];
     
-    keys = @{
-             @"F1"  : @0x7A,
-             @"F2"  : @0x78,
-             @"F3"  : @0x63,
-             @"F4"  : @0x76,
-             @"F5"  : @0x60,
-             @"F6"  : @0x61,
-             @"F7"  : @0x62,
-             @"F8"  : @0x64,
-             @"F9"  : @0x65,
-             @"F10" : @0x6D,
-             @"F11" : @0x67,
-             @"F12" : @0x6F,
-             @"F13" : @0x69,
-             @"F14" : @0x6B,
-             @"F15" : @0x71,
-             @"F16" : @0x6A,
-             @"F17" : @0x40,
-             @"F18" : @0x4F,
-             @"F19" : @0x50,
-             @"F20" : @0x5A
-             };
+    self.keys = @{
+                  @"F1"  : @0x7A,
+                  @"F2"  : @0x78,
+                  @"F3"  : @0x63,
+                  @"F4"  : @0x76,
+                  @"F5"  : @0x60,
+                  @"F6"  : @0x61,
+                  @"F7"  : @0x62,
+                  @"F8"  : @0x64,
+                  @"F9"  : @0x65,
+                  @"F10" : @0x6D,
+                  @"F11" : @0x67,
+                  @"F12" : @0x6F,
+                  @"F13" : @0x69,
+                  @"F14" : @0x6B,
+                  @"F15" : @0x71,
+                  @"F16" : @0x6A,
+                  @"F17" : @0x40,
+                  @"F18" : @0x4F,
+                  @"F19" : @0x50,
+                  @"F20" : @0x5A
+                  };
     
     if (![self _loadBezelServices])
     {
@@ -398,28 +398,28 @@ void shutdownSignalHandler(int signal)
     return [maxBrightness intValue];
 }
 
-- (NSString *)decreaseBrightnessKeyCode {
-    id decreaseBrightnessKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"decreaseBrightnessKeyCode"];
+- (NSString *)decreaseBrightnessKey {
+    id decreaseBrightnessKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"decreaseBrightnessKey"];
     if (!decreaseBrightnessKeyCode) {
         return @"F1";
     }
     return decreaseBrightnessKeyCode;
 }
 
-- (void)setDecreaseBrightnessKeyCode:(NSString *)decreaseBrightnessKeyCode {
-    [NSUserDefaults.standardUserDefaults setObject:decreaseBrightnessKeyCode forKey:@"decreaseBrightnessKeyCode"];
+- (void)setDecreaseBrightnessKey:(NSString *)decreaseBrightnessKeyCode {
+    [NSUserDefaults.standardUserDefaults setObject:decreaseBrightnessKeyCode forKey:@"decreaseBrightnessKey"];
 }
 
-- (NSString *)increaseBrightnessKeyCode {
-    id increaseBrightnessKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"increaseBrightnessKeyCode"];
+- (NSString *)increaseBrightnessKey {
+    id increaseBrightnessKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"increaseBrightnessKey"];
     if (!increaseBrightnessKeyCode) {
         return @"F2";
     }
     return increaseBrightnessKeyCode;
 }
 
-- (void)setIncreaseBrightnessKeyCode:(NSString *)increaseBrightnessKeyCode {
-    [NSUserDefaults.standardUserDefaults setObject:increaseBrightnessKeyCode forKey:@"increaseBrightnessKeyCode"];
+- (void)setIncreaseBrightnessKey:(NSString *)increaseBrightnessKeyCode {
+    [NSUserDefaults.standardUserDefaults setObject:increaseBrightnessKeyCode forKey:@"increaseBrightnessKey"];
 }
 
 - (void)setAdjustColorTemperature:(BOOL)adjustColorTemperature {
@@ -459,28 +459,28 @@ void shutdownSignalHandler(int signal)
     return [colorTemperatureLimit floatValue];
 }
 
-- (NSString *)colorTemperatureLessWarmKeyCode {
-    id colorTemperatureLessWarmKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"colorTemperatureLessWarmKeyCode"];
+- (NSString *)colorTemperatureLessWarmKey {
+    id colorTemperatureLessWarmKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"colorTemperatureLessWarmKey"];
     if (!colorTemperatureLessWarmKeyCode) {
         return @"F3";
     }
     return colorTemperatureLessWarmKeyCode;
 }
 
-- (void)setColorTemperatureLessWarmKeyCode:(NSString *)colorTemperatureLessWarmKeyCode {
-    [NSUserDefaults.standardUserDefaults setObject:colorTemperatureLessWarmKeyCode forKey:@"colorTemperatureLessWarmKeyCode"];
+- (void)setColorTemperatureLessWarmKey:(NSString *)colorTemperatureLessWarmKeyCode {
+    [NSUserDefaults.standardUserDefaults setObject:colorTemperatureLessWarmKeyCode forKey:@"colorTemperatureLessWarmKey"];
 }
 
-- (NSString *)colorTemperatureMoreWarmKeyCode {
-    id colorTemperatureMoreWarmKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"colorTemperatureMoreWarmKeyCode"];
+- (NSString *)colorTemperatureMoreWarmKey {
+    id colorTemperatureMoreWarmKeyCode = [NSUserDefaults.standardUserDefaults valueForKey:@"colorTemperatureMoreWarmKey"];
     if (!colorTemperatureMoreWarmKeyCode) {
         return @"F4";
     }
     return colorTemperatureMoreWarmKeyCode;
 }
 
-- (void)setColorTemperatureMoreWarmKeyCode:(NSString *)colorTemperatureMoreWarmKeyCode {
-    [NSUserDefaults.standardUserDefaults setObject:colorTemperatureMoreWarmKeyCode forKey:@"colorTemperatureMoreWarmKeyCode"];
+- (void)setColorTemperatureMoreWarmKey:(NSString *)colorTemperatureMoreWarmKeyCode {
+    [NSUserDefaults.standardUserDefaults setObject:colorTemperatureMoreWarmKeyCode forKey:@"colorTemperatureMoreWarmKey"];
 }
 
 //-------
@@ -500,7 +500,8 @@ void shutdownSignalHandler(int signal)
     [NSUserDefaults.standardUserDefaults setObject:newDisplayBrighnesses forKey:kDisplaysBrightnessDefaultsKey];
     [NSUserDefaults.standardUserDefaults synchronize];
     APP_DELEGATE.currentBrightness = newBrightness;
-    APP_DELEGATE.statusBarIcon.length = APP_DELEGATE.currentBrightness == 100 ? STATUS_ICON_WIDTH_TEXT_100 : STATUS_ICON_WIDTH_TEXT;
+    APP_DELEGATE.statusBarIcon.length = APP_DELEGATE.showBrightness ? APP_DELEGATE.currentBrightness == 100
+                                                                    ? STATUS_ICON_WIDTH_TEXT_100 : STATUS_ICON_WIDTH_TEXT : STATUS_ICON_WIDTH;
 }
 
 + (BOOL)loadSavedBrightness:(uint*) savedBrightness forDisplayID:(CGDirectDisplayID) displayID {

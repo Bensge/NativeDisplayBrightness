@@ -6,11 +6,13 @@
 
 ![](Info/Settings.png)
 
-This a utility application to control the brightness of an external monitor directly from your keyboard.
+This a utility application to control the brightness and color temperature of an external monitor directly from your keyboard.
 
 Use the `F1` /  `F2` key to decrease / increase the brightness of the external monitor. If you have an Apple or similar keyboard, you probably need to also press the `fn` key.
 
-For a finer brightness level adjustment, you add the option key, i.e use `alt` + `F1` to decrease the brightness, or  `alt` + `F2` to increase it. Also you can enable smooth step in the settings. 
+Also you can set any key from `F1` to `F20` in the settings for changing of brightness or color temperature.
+
+For a finer brightness level adjustment, you add the option key, i.e use `Alt` + `F1` to decrease the brightness, or  `Alt` + `F2` to increase it. Also you can enable smooth step in the settings.
 
 This app  shows the **native** system UI when changing brightness! It uses the private `BezelServices` framework for this.
 

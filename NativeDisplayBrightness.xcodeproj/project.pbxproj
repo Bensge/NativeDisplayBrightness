@@ -326,7 +326,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
 				INFOPLIST_FILE = NativeDisplayBrightness/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bensge.NativeDisplayBrightness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -340,7 +340,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
 				INFOPLIST_FILE = NativeDisplayBrightness/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bensge.NativeDisplayBrightness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

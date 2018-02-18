@@ -64,6 +64,7 @@ enum {
     kVK_UpArrow                   = 0x7E
 };
 
+
 #pragma mark - constants
 
 static NSString *const kDisplaysBrightnessDefaultsKey = @"displays-brightness";

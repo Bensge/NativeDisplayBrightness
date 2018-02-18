@@ -91,9 +91,9 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nJI-qD-qeX">
-                        <rect key="frame" x="74" y="248" width="154" height="17"/>
+                        <rect key="frame" x="62" y="248" width="166" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Increase Brightness Key:" id="YbG-Vf-LXx">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Decrease Brightness Key:" id="YbG-Vf-LXx">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -129,42 +129,27 @@
                         <rect key="frame" x="12" y="167" width="516" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </box>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgU-58-JSV">
-                        <rect key="frame" x="232" y="243" width="95" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="QH0-RX-jXd" id="7j9-3l-Nzc">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="Lym-X2-R3i">
-                                <items>
-                                    <menuItem title="F1" state="on" id="QH0-RX-jXd"/>
-                                    <menuItem title="F2" id="txS-jf-34P"/>
-                                    <menuItem title="F3" id="IBy-Tk-r6b"/>
-                                    <menuItem title="F15" id="xd0-8L-sP7"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E1o-e8-byB">
                         <rect key="frame" x="68" y="217" width="160" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Decrease Brightness Key:" id="J1B-yJ-mmg">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Increase Brightness Key:" id="J1B-yJ-mmg">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLe-Df-5Oc">
-                        <rect key="frame" x="232" y="212" width="95" height="26"/>
+                        <rect key="frame" x="232" y="243" width="77" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="F2" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="KPV-Ji-VkL" id="KnE-uG-IKu">
+                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kQD-pW-Kv0" id="KnE-uG-IKu">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="7Eo-pc-AYz">
                                 <items>
-                                    <menuItem title="F1" id="v7t-GG-ggB"/>
-                                    <menuItem title="F2" state="on" id="KPV-Ji-VkL"/>
-                                    <menuItem title="F3" id="gih-p0-cgL"/>
+                                    <menuItem title="F1" state="on" id="kQD-pW-Kv0"/>
+                                    <menuItem title="F3" id="Tsd-UJ-fh8"/>
+                                    <menuItem title="F2" id="Ycl-1y-nSW"/>
+                                    <menuItem title="F4" id="Tvq-Uf-6w5"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -179,9 +164,9 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ka3-yX-Tak">
-                        <rect key="frame" x="232" y="48" width="67" height="26"/>
+                        <rect key="frame" x="232" y="48" width="77" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="F3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="jI3-5y-wSi" id="v6q-W3-pyq">
+                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7f4-yt-FLf" id="v6q-W3-pyq">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="9hN-Y2-VLx">
@@ -190,7 +175,6 @@
                                     <menuItem title="F2" id="hpJ-JF-2YX"/>
                                     <menuItem title="F3" state="on" id="jI3-5y-wSi"/>
                                     <menuItem title="F4" id="StK-U8-C1N"/>
-                                    <menuItem title="F15" id="air-mF-Cj0"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -205,7 +189,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbU-HZ-NXj">
-                        <rect key="frame" x="232" y="17" width="67" height="26"/>
+                        <rect key="frame" x="232" y="17" width="77" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="F4" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="rIs-In-Hcf" id="htD-ey-ju8">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -221,7 +205,7 @@
                         </popUpButtonCell>
                     </popUpButton>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="5QX-91-Hp1">
-                        <rect key="frame" x="12" y="281" width="516" height="5"/>
+                        <rect key="frame" x="12" y="281" width="516" height="4"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </box>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7uW-ra-hsZ">
@@ -254,6 +238,22 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgU-58-JSV">
+                        <rect key="frame" x="232" y="212" width="77" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="F1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="QH0-RX-jXd" id="7j9-3l-Nzc">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="Lym-X2-R3i">
+                                <items>
+                                    <menuItem title="F1" state="on" id="QH0-RX-jXd"/>
+                                    <menuItem title="F2" id="txS-jf-34P"/>
+                                    <menuItem title="F3" id="IBy-Tk-r6b"/>
+                                    <menuItem title="F4" id="xd0-8L-sP7"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
                 </subviews>
             </view>
             <connections>

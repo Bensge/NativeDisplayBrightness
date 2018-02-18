@@ -15,6 +15,8 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
+@property (strong) NSDictionary *keys;
+
 @property (strong) NSStatusItem *statusBarIcon;
 @property (strong) NSMenu *statusBarMenu;
 @property (strong) BrightnessViewController *brightnessView;
@@ -33,14 +35,19 @@
 @property (nonatomic, assign) BOOL showBrightness;
 @property (nonatomic, assign) int maxBrightness;
 
+@property (nonatomic, strong) NSString *increaseBrightnessKey;
+@property (nonatomic, strong) NSString *decreaseBrightnessKey;
+
 @property (nonatomic, assign) BOOL adjustColorTemperature;
 @property (nonatomic, assign) float colorTemperatureLimit;
+
+@property (nonatomic, strong) NSString *colorTemperatureLessWarmKey;
+@property (nonatomic, strong) NSString *colorTemperatureMoreWarmKey;
 
 +(BOOL)loadSavedBrightness:(uint*) savedBrightness forDisplayID:(CGDirectDisplayID) displayID;
 
 +(void)changeMainScreenBrightness:(int) newBrightness;
 +(void)changeMainScreenBrightnessWithStep:(int) deltaInSubsteps;
-
 
 +(void)changeScreenColorTemperature:(float) colorTemperature;
 +(void)changeScreenColorTemperatureStep:(float) colorTemperatureStep;

@@ -5,12 +5,17 @@
 //  Created by Benno Krauss on 19.10.16.
 //  Copyright © 2016 Benno Krauss. All rights reserved.
 //
+//  2018 Alexandre Kahn
+//  Added the posibility to change the brightness of the build in screen
 
 #import "AppDelegate.h"
 #import "DDC.h"
 #import "BezelServices.h"
 #import "OSD.h"
 #include <dlfcn.h>
+#include <Carbon/Carbon.h>
+
+
 @import Carbon;
 
 #pragma mark - constants
@@ -33,6 +38,17 @@ void set_control(CGDirectDisplayID cdisplay, uint control_id, uint new_value)
     if (!DDCWrite(cdisplay, &command)){
         NSLog(@"E: Failed to send DDC command!");
     }
+}
+
+void virtual_keypress(int keycode){
+    CGEventRef keyup, keydown;
+    keydown = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keycode, true);
+    keyup = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keycode, false);
+    
+    CGEventPost(kCGHIDEventTap, keydown);
+    CGEventPost(kCGHIDEventTap, keyup);
+    CFRelease(keydown);
+    CFRelease(keyup);
 }
 
 
@@ -108,6 +124,10 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self decreaseBrightness];
+                    NSLog(@"Clicked Down");
+                    int brightdown = 107;
+                    virtual_keypress(brightdown);
+                    
                 });
             }
         }
@@ -117,6 +137,9 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self increaseBrightness];
+                    NSLog(@"Clicked UP");
+                    int brightup = 113;
+                    virtual_keypress(brightup);
                 });
             }
         }

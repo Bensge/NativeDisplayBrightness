@@ -9,8 +9,6 @@
 #ifndef BezelServices_h
 #define BezelServices_h
 
-#include "CoreGraphicsPriv.h"
-
 typedef enum {
     BSGraphicBacklightMeter                         = 0xfffffff7,
     BSGraphicBacklightFailure                       = 0xfffffff6,

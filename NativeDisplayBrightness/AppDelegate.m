@@ -175,6 +175,7 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
         if (event.type == NSEventTypeKeyDown)
         {
             BOOL isOptionModifierPressed = (event.modifierFlags & NSAlternateKeyMask) != 0;
+            BOOL isShiftModifierPressed = (event.modifierFlags & NSShiftKeyMask) != 0;
         
             if ((event.keyCode == kVK_F1) ||  (event.keyCode == kVK_F2))
             {
@@ -186,7 +187,7 @@ static void showBrightnessLevelPaneOnDisplay (uint brightnessLevelInSubsteps, CG
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self incrementMainScreenBrightnessWithStep: brightnessDelta];
+                    [self incrementScreenBrightnessWithStep: brightnessDelta inAllScreens:isShiftModifierPressed];
                 });
             }
         }
@@ -261,75 +262,120 @@ void shutdownSignalHandler(int signal)
     return NO;
 }
 
-- (void)incrementMainScreenBrightnessWithStep:(int)deltaInSubsteps
+- (void)incrementScreenBrightnessWithStep:(int)deltaInSubsteps inAllScreens:(BOOL)updateAllScreens
 {
-    CGDirectDisplayID currentDisplayId = [NSScreen.mainScreen.deviceDescription [@"NSScreenNumber"] unsignedIntValue];
+    if (! updateAllScreens) {
+        // Set the brightness only in the main screen
+        [self incrementScreenBrightnessWithStep:deltaInSubsteps inScreen:NSScreen.mainScreen];
+    }
+    else {
+        for (NSScreen* screen in NSScreen.screens) {
+            [self incrementScreenBrightnessWithStep:deltaInSubsteps inScreen:screen];
+        }
+    }
+}
+
+- (void) incrementScreenBrightnessWithStep:(int)deltaInSubsteps inScreen:(NSScreen*)targetScreen
+{
+    CGDirectDisplayID currentDisplayId = [targetScreen.deviceDescription [@"NSScreenNumber"] unsignedIntValue];
     
-    if (! CGDisplayIsBuiltin(currentDisplayId)) {
+    BOOL isBuiltinDisplay = CGDisplayIsBuiltin(currentDisplayId);
+    io_service_t builtinDisplayIOService = isBuiltinDisplay ? CGDisplayIOServicePort(currentDisplayId) : IO_OBJECT_NULL;
+    
+    BOOL isCurrentBrighnessAvailableFromExternalDisplay = NO;
+    uint maxExternalDisplayBrightness = 100;
+    NSString* currentExternalDisplayDefaultsKey;
+    
+    // Get the current brightness
+    int currentBrightnessInSubsteps = -1;
+    
+    if (! isBuiltinDisplay) {
         
         uint currentBrightness = 50;
-        uint maxBrightness = 100;
         
         // Get the current display brightness
         // Fist, try user defaults to avoid waiting for a timeout if the display is known not to support DDCRead;
         // If user defaults are not set, read the brightness value from the display
         
         BOOL isCurrentBrighnessReadFromDefaults = NO;
-        NSString* currentDisplayIdKey = [NSString stringWithFormat:@"%u", currentDisplayId];
+        currentExternalDisplayDefaultsKey = [NSString stringWithFormat:@"%u", currentDisplayId];
         NSDictionary* savedDisplayBrighnesses =  [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
         if ([savedDisplayBrighnesses isKindOfClass:[NSDictionary class]]) {
-            NSNumber* savedCurrentBrightness = savedDisplayBrighnesses [currentDisplayIdKey];
+            NSNumber* savedCurrentBrightness = savedDisplayBrighnesses [currentExternalDisplayDefaultsKey];
             if ([savedCurrentBrightness isKindOfClass:[NSNumber class]]) {
                 currentBrightness = (uint) savedCurrentBrightness.unsignedIntegerValue;
                 isCurrentBrighnessReadFromDefaults = YES;
             }
         }
         
-        BOOL isCurrentBrighnessAvailableFromDisplay = NO;
         if (! isCurrentBrighnessReadFromDefaults) {
-            isCurrentBrighnessAvailableFromDisplay = get_control(currentDisplayId, BRIGHTNESS, &currentBrightness, &maxBrightness);
+            isCurrentBrighnessAvailableFromExternalDisplay = get_control(currentDisplayId, BRIGHTNESS, &currentBrightness, &maxExternalDisplayBrightness);
         }
 
-        int currentBrightnessInSubsteps = round((double)currentBrightness / (double)maxBrightness * (double)brightnessSubstepsCount);
+        currentBrightnessInSubsteps = round((double)currentBrightness / (double)maxExternalDisplayBrightness * (double)brightnessSubstepsCount);
+    }
+    else {
+        float currentBrightness; 
+        IOReturn ioResult = IODisplayGetFloatParameter(builtinDisplayIOService, kNilOptions, CFSTR(kIODisplayBrightnessKey), &currentBrightness);
+        if (ioResult == kIOReturnSuccess) {
+            // currentBrightness is in the [0, 1] range: convert it to substeps
+            currentBrightnessInSubsteps = round((double)currentBrightness * (double)brightnessSubstepsCount);
+        }
+    }
+    
+    if (currentBrightnessInSubsteps != -1) {
         
+        // Compute the new brightness for this display
         int newBrightnessInSubsteps = MIN(MAX(0, currentBrightnessInSubsteps + deltaInSubsteps), brightnessSubstepsCount);
         if (abs(deltaInSubsteps) != 1) {
             // newBrightnessInSubsteps must be a multiple of deltaInSubsteps
             newBrightnessInSubsteps = (newBrightnessInSubsteps / deltaInSubsteps) * deltaInSubsteps;
         }
         
-        uint newBrightness = (uint) round((double)newBrightnessInSubsteps / (double)brightnessSubstepsCount * (double)maxBrightness);
-        
-        if (newBrightness != currentBrightness) {
-           
-            if (set_control(currentDisplayId, BRIGHTNESS, newBrightness)) {
+        if (newBrightnessInSubsteps != currentBrightnessInSubsteps) {
+            // Set the new brightness
+            if (! isBuiltinDisplay) {
+                uint newBrightness = (uint) round((double)newBrightnessInSubsteps / (double)brightnessSubstepsCount * (double)maxExternalDisplayBrightness);
                 
-                // NSLog(@"New brightness: %d", newBrightness);
+                if (set_control(currentDisplayId, BRIGHTNESS, newBrightness)) {
                 
-                // Display the brighness level OSD
-                showBrightnessLevelPaneOnDisplay(newBrightnessInSubsteps, currentDisplayId);
-                
-                if  (! isCurrentBrighnessAvailableFromDisplay) {
-                    // Save the new brighness value
-                    NSMutableDictionary* newDisplayBrighnesses;
-                    NSDictionary* savedDisplayBrighnesses =  [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
+                    // NSLog(@"New brightness: %d", newBrightness);
                     
-                    if ([savedDisplayBrighnesses isKindOfClass:[NSDictionary class]]) {
-                        newDisplayBrighnesses = [NSMutableDictionary dictionaryWithDictionary:savedDisplayBrighnesses];
-                    }                    else {
-                        newDisplayBrighnesses = [NSMutableDictionary new];
+                    if  (! isCurrentBrighnessAvailableFromExternalDisplay) {
+                        // Save the new brighness value
+                        NSMutableDictionary* newDisplayBrighnesses;
+                        NSDictionary* savedDisplayBrighnesses =  [NSUserDefaults.standardUserDefaults objectForKey:kDisplaysBrightnessDefaultsKey];
+                        
+                        if ([savedDisplayBrighnesses isKindOfClass:[NSDictionary class]]) {
+                            newDisplayBrighnesses = [NSMutableDictionary dictionaryWithDictionary:savedDisplayBrighnesses];
+                        }                    
+                        else {
+                            newDisplayBrighnesses = [NSMutableDictionary new];
+                        }
+                        
+                        newDisplayBrighnesses [currentExternalDisplayDefaultsKey] = @(newBrightness);
+                        
+                        [NSUserDefaults.standardUserDefaults setObject:newDisplayBrighnesses forKey:kDisplaysBrightnessDefaultsKey];
                     }
-                    
-                    newDisplayBrighnesses [currentDisplayIdKey] = @(newBrightness);
-                    
-                    [NSUserDefaults.standardUserDefaults setObject:newDisplayBrighnesses forKey:kDisplaysBrightnessDefaultsKey];
+                }
+                else {
+                    // Brightness has not been set
+                    newBrightnessInSubsteps = currentBrightnessInSubsteps;
+                }
+            }
+            else { 
+                // Builtin display
+                float newBrightness = (double)newBrightnessInSubsteps / (double)brightnessSubstepsCount;
+                IOReturn ioResult = IODisplaySetFloatParameter(builtinDisplayIOService, kNilOptions,  CFSTR(kIODisplayBrightnessKey), newBrightness);
+                if (ioResult != kIOReturnSuccess) {
+                    // Brightness has not been set
+                    newBrightnessInSubsteps = currentBrightnessInSubsteps;
                 }
             }
         }
-        else {
-            // Min or max brightness level: present the OSD to provide a feedback to the user, but don't send a command
-            showBrightnessLevelPaneOnDisplay(newBrightness, currentDisplayId);
-        }
+        
+        // Display the brighness level OSD
+        showBrightnessLevelPaneOnDisplay(newBrightnessInSubsteps, currentDisplayId);
     }
 }
 

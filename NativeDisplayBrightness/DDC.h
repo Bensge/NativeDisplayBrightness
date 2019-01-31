@@ -25,7 +25,7 @@
 #define AUTO_SIZE_CENTER 0x1E
 #define WIDTH 0x22
 #define HEIGHT 0x32
-#define VERTICAL_POS	0x30
+#define VERTICAL_POS    0x30
 #define HORIZONTAL_POS 0x20
 #define PINCUSHION_AMP 0x24
 #define PINCUSHION_PHASE 0x42
@@ -45,7 +45,6 @@
 #define RED_BLACK_LEVEL 0x6C
 #define GREEN_BLACK_LEVEL 0x6E
 #define BLUE_BLACK_LEVEL 0x70
-#define ORIENTATION 0xAA
 #define AUDIO_MUTE 0x8D
 #define SETTINGS 0xB0                  //unsure on this one
 #define ON_SCREEN_DISPLAY 0xCA
@@ -85,6 +84,7 @@ struct EDID {
     UInt8 versionmajor : 8;
     UInt8 versionminor : 8;
     UInt8 digitalinput : 1;
+    union inputbitmap {
         struct digitalinput {
             UInt8 : 6;
             UInt8 dfp : 1;
@@ -97,6 +97,7 @@ struct EDID {
             UInt8 green : 1;
             UInt8 serrated : 1;
         } analog;
+    };
     UInt8 maxh : 8;
     UInt8 maxv : 8;
     UInt8 gamma : 8;
@@ -181,6 +182,7 @@ struct EDID {
             UInt8 interlaced : 1;
             UInt8 stereo : 2;
             UInt8 synctype : 2;
+            union sync {
                 struct analogsync {
                     UInt8 serrated : 1;
                     UInt8 syncall : 1;
@@ -189,6 +191,7 @@ struct EDID {
                     UInt8 vsync : 1;
                     UInt8 hsync : 1;
                 } digital;
+            };
             UInt8 twowaystereo : 1;
         } timing;
         struct text {

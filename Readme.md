@@ -1,5 +1,7 @@
 # NativeDisplayBrightness
 
+https://www.tonymacx86.com/threads/nativedisplaybrightness-with-gui-fork.256152/
+
 *Control your desktop monitor brightness just like on a MacBook!*
 
 ![](Info/nativeUI.png)

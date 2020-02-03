@@ -1,3 +1,5 @@
+# This project is not actively developed.
+
 # NativeDisplayBrightness
 
 https://www.tonymacx86.com/threads/nativedisplaybrightness-with-gui-fork.256152/

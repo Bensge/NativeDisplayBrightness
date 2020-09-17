@@ -172,7 +172,7 @@
 		9DBE37441DB7990900ABE422 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Benno Krauss";
 				TargetAttributes = {
 					9DBE374B1DB7990900ABE422 = {
@@ -331,6 +331,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12.4;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bensge.NativeDisplayBrightness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -349,6 +350,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12.4;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bensge.NativeDisplayBrightness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

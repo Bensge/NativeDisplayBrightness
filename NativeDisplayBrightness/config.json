@@ -1,0 +1,30 @@
+{
+    "info": "Config for editing by user",
+    
+    "buttonBrightnessUp": {
+        "comment": "Key combination for brightness increase",
+        "keyCode": "VK_F2"
+    },
+    "buttonBrightnessDown": {
+        "comment": "Key combination for brightness decrease",
+        "keyCode": "VK_F1"
+    },
+    
+    "example": {
+        "buttonDefinition": {
+            "keyCode": "VK_F5",
+            "isShift": false,
+            "isAlt": false,
+            "isCmd": true,
+            "isCtrl": true,
+            "isCaps": false,
+            "isFN": false
+        },
+        "info": {
+            "text0": "Definition before means Ctrl+Cmd+F5 key combination",
+            "text1": "You can check keys codess in 'macOSKeyCodes.json'. Also you can write just F5 instead VK_F5, for more convenience",
+            "text2": "'false' values can be skipped",
+            "text3": "Be care about 'isCaps' and 'isFN' - thats working as trigger, not key-combo. So that 'true' means 'true', 'false' means 'does not matter'"
+        }
+    }
+}

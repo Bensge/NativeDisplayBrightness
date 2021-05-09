@@ -12,6 +12,9 @@
 		9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37551DB7990900ABE422 /* Assets.xcassets */; };
 		9DBE37591DB7990900ABE422 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37571DB7990900ABE422 /* MainMenu.xib */; };
 		9DBE37621DB7996100ABE422 /* DDC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E20E58922648360200C1F30B /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = E20E58902648360200C1F30B /* config.json */; };
+		E20E58932648360200C1F30B /* macOSKeyCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = E20E58912648360200C1F30B /* macOSKeyCodes.json */; };
+		E20E58952648362800C1F30B /* ButtonControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E20E58942648362800C1F30B /* ButtonControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,10 @@
 		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
 		9DBE37641DB7A87200ABE422 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		E20E58902648360200C1F30B /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		E20E58912648360200C1F30B /* macOSKeyCodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = macOSKeyCodes.json; sourceTree = "<group>"; };
+		E20E58942648362800C1F30B /* ButtonControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonControl.m; sourceTree = "<group>"; };
+		E20E58962648363300C1F30B /* ButtonControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonControl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +68,8 @@
 		9DBE374E1DB7990900ABE422 /* NativeDisplayBrightness */ = {
 			isa = PBXGroup;
 			children = (
+				E20E58902648360200C1F30B /* config.json */,
+				E20E58912648360200C1F30B /* macOSKeyCodes.json */,
 				9DBE374F1DB7990900ABE422 /* AppDelegate.h */,
 				9DBE37501DB7990900ABE422 /* AppDelegate.m */,
 				9DBE37551DB7990900ABE422 /* Assets.xcassets */,
@@ -74,6 +83,8 @@
 				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
 				9D1F75421DBD44310039345A /* OSD.h */,
 				9D1F75431DBD48310039345A /* CoreGraphicsPriv.h */,
+				E20E58942648362800C1F30B /* ButtonControl.m */,
+				E20E58962648363300C1F30B /* ButtonControl.h */,
 			);
 			path = NativeDisplayBrightness;
 			sourceTree = "<group>";
@@ -126,6 +137,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -144,8 +156,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E20E58932648360200C1F30B /* macOSKeyCodes.json in Resources */,
 				9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */,
 				9DBE37591DB7990900ABE422 /* MainMenu.xib in Resources */,
+				E20E58922648360200C1F30B /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +173,7 @@
 				9DBE37621DB7996100ABE422 /* DDC.m in Sources */,
 				9DBE37541DB7990900ABE422 /* main.m in Sources */,
 				9DBE37511DB7990900ABE422 /* AppDelegate.m in Sources */,
+				E20E58952648362800C1F30B /* ButtonControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

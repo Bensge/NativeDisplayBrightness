@@ -5,6 +5,9 @@
 //  Created by Benno Krauss on 19.10.16.
 //  Copyright © 2016 Benno Krauss. All rights reserved.
 //
+//  Updated by Ivan_Alone on 09.05.21
+//  Made with GNU GPL v3 permission
+//
 
 #import "AppDelegate.h"
 #import "DDC.h"
@@ -21,6 +24,8 @@ static const float brightnessStep = 100/16.f;
 #pragma mark - variables
 
 void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
+ButtonControl *globalButtonBrightnessUp = NULL, *globalButtonBrightnessDown = NULL;
+NSDictionary* keyCodesAll = NULL;
 
 #pragma mark - functions
 
@@ -45,7 +50,9 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
     if (type == NX_KEYDOWN || type == NX_KEYUP || type == NX_FLAGSCHANGED)
     {
         int64_t keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-        if (keyCode == kVK_F2 || keyCode == kVK_F1)
+        int64_t modifierFlags = CGEventGetFlags(event);
+        
+        if ([globalButtonBrightnessDown verifyKey:keyCode arg2: modifierFlags] || [globalButtonBrightnessUp verifyKey:keyCode arg2: modifierFlags])
         {
             return NULL;
         }
@@ -102,7 +109,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 {
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSEventMaskKeyDown | NSEventMaskKeyUp handler:^(NSEvent *_Nonnull event) {
         //NSLog(@"event!!");
-        if (event.keyCode == kVK_F1)
+        if ([globalButtonBrightnessDown verifyKey:event.keyCode arg2: event.modifierFlags])
         {
             if (event.type == NSEventTypeKeyDown)
             {
@@ -111,7 +118,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
                 });
             }
         }
-        else if (event.keyCode == kVK_F2)
+        else if ([globalButtonBrightnessUp verifyKey:event.keyCode arg2: event.modifierFlags])
         {
             if (event.type == NSEventTypeKeyDown)
             {
@@ -152,6 +159,7 @@ CGEventRef keyboardCGEventCallback(CGEventTapProxy proxy,
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [self loadSettings];
     if (![self _loadBezelServices])
     {
         [self _loadOSDFramework];
@@ -239,5 +247,88 @@ void shutdownSignalHandler(int signal)
     self.brightness = MAX(self.brightness-brightnessStep,0);
 }
 
+- (int) parseKeyCode: (NSString*) candidate {
+    if (keyCodesAll == NULL) {
+        keyCodesAll = [self JSONFromFile:@"macOSKeyCodes"];
+    }
+    
+    candidate = candidate.uppercaseString;
+    
+    if (candidate.length < 3 || ![[candidate substringToIndex: 3] isEqualToString:@"VK_"] ) {
+        candidate = [NSString stringWithFormat:@"%@%@", @"VK_", candidate];
+    }
+    
+    if (keyCodesAll != NULL && keyCodesAll[candidate]) {
+        return [[keyCodesAll valueForKey:candidate] intValue ];
+    }
+    
+    return 0;
+}
+
+- (ButtonControl*) parseButtonData: (NSDictionary*) jsonButton {
+    ButtonControl* btn = [ButtonControl new];
+    
+    NSString* keyCode = [jsonButton objectForKey:@"keyCode"];
+    
+    if (keyCode != NULL) {
+        int keyCodeInt = keyCode.intValue;
+        NSString* recomp = [NSString stringWithFormat:@"%d", keyCodeInt];
+        
+        if (keyCode != recomp) {
+            keyCodeInt = [self parseKeyCode: keyCode];
+        }
+        
+        btn.keyCode = keyCodeInt;
+        
+        btn.isShift = [[jsonButton valueForKey:@"isShift"] boolValue];
+        btn.isAlt   = [[jsonButton valueForKey:@"isAlt"  ] boolValue];
+        btn.isCmd   = [[jsonButton valueForKey:@"isCmd"  ] boolValue];
+        btn.isCtrl  = [[jsonButton valueForKey:@"isCtrl" ] boolValue];
+        btn.isCaps  = [[jsonButton valueForKey:@"isCaps" ] boolValue];
+        btn.isFN    = [[jsonButton valueForKey:@"isFN"   ] boolValue];
+        
+        return btn;
+    }
+    return NULL;
+}
+
+- (void)loadSettings
+{
+    NSDictionary *dict = [self JSONFromFile: @"config"];
+
+    NSDictionary* buttonBrightnessUp   = [dict objectForKey:@"buttonBrightnessUp"];
+    NSDictionary* buttonBrightnessDown = [dict objectForKey:@"buttonBrightnessDown"];
+    
+    globalButtonBrightnessUp           = [ButtonControl new];
+    globalButtonBrightnessUp.keyCode   = kVK_F2;
+    
+    globalButtonBrightnessDown         = [ButtonControl new];
+    globalButtonBrightnessDown.keyCode = kVK_F1;
+    
+    if (buttonBrightnessUp != NULL) {
+        ButtonControl* btn = [self parseButtonData: buttonBrightnessUp];
+        
+        if (btn && btn.keyCode) {
+            globalButtonBrightnessUp = btn;
+        }
+    }
+    
+    if (buttonBrightnessDown != NULL) {
+        ButtonControl* btn = [self parseButtonData: buttonBrightnessDown];
+        
+        if (btn && btn.keyCode) {
+            globalButtonBrightnessDown = btn;
+        }
+    }
+    
+    NSLog(@"Config loaded!");
+}
+
+- (NSDictionary *)JSONFromFile: (NSString*) filename
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+}
 
 @end

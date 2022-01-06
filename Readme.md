@@ -1,4 +1,9 @@
-# This project is not actively developed.
+# Project is not actively developed.
+
+This application was originally light and simple, for one monitor.
+
+# As a whole new level, I highly recommend this incredibly cool project:
+# https://github.com/MonitorControl/MonitorControl
 
 # NativeDisplayBrightness
 

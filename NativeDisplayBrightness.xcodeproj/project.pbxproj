@@ -3,32 +3,49 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		9DBE37511DB7990900ABE422 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37501DB7990900ABE422 /* AppDelegate.m */; };
 		9DBE37541DB7990900ABE422 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37531DB7990900ABE422 /* main.m */; };
 		9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37551DB7990900ABE422 /* Assets.xcassets */; };
-		9DBE37591DB7990900ABE422 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE37571DB7990900ABE422 /* MainMenu.xib */; };
-		9DBE37621DB7996100ABE422 /* DDC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9DBE37621DB7996100ABE422 /* DDC.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE37601DB7996100ABE422 /* DDC.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F8A8C8E7201F925800F49C15 /* CoreBrightness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A8C8E6201F925800F49C15 /* CoreBrightness.framework */; };
+		F8A8C8EB201F98CF00F49C15 /* ColorTemperatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A8C8E9201F98CF00F49C15 /* ColorTemperatureViewController.m */; };
+		F8A8C8EC201F98CF00F49C15 /* ColorTemperatureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A8C8EA201F98CF00F49C15 /* ColorTemperatureViewController.xib */; };
+		F8DB0B58201DE52F00991F83 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B57201DE52F00991F83 /* Readme.md */; };
+		F8DB0B61201DEAF300991F83 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */; };
+		F8DB0B62201DEAF300991F83 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B60201DEAF300991F83 /* SettingsWindowController.xib */; };
+		F8DB0B68201E008200991F83 /* BrightnessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DB0B66201E008200991F83 /* BrightnessViewController.m */; };
+		F8DB0B69201E008200991F83 /* BrightnessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8DB0B67201E008200991F83 /* BrightnessViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9D1F75421DBD44310039345A /* OSD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSD.h; sourceTree = "<group>"; };
-		9D1F75431DBD48310039345A /* CoreGraphicsPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreGraphicsPriv.h; sourceTree = "<group>"; };
 		9DBE374C1DB7990900ABE422 /* NativeDisplayBrightness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeDisplayBrightness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DBE374F1DB7990900ABE422 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DBE37501DB7990900ABE422 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9DBE37531DB7990900ABE422 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9DBE37551DB7990900ABE422 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9DBE37581DB7990900ABE422 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9DBE375A1DB7990900ABE422 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9DBE37601DB7996100ABE422 /* DDC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDC.m; sourceTree = "<group>"; };
+		9DBE37601DB7996100ABE422 /* DDC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DDC.c; sourceTree = "<group>"; };
 		9DBE37611DB7996100ABE422 /* DDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDC.h; sourceTree = "<group>"; };
 		9DBE37631DB79A4000ABE422 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezelServices.h; sourceTree = "<group>"; };
-		9DBE37641DB7A87200ABE422 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
-		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		9DBE37661DB7A9D600ABE422 /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = License.txt; path = NativeDisplayBrightness/License.txt; sourceTree = SOURCE_ROOT; };
+		F8197A22201E818A0006516C /* CBBlueLightClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBBlueLightClient.h; sourceTree = "<group>"; };
+		F8A8C8E4201F7F1600F49C15 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		F8A8C8E6201F925800F49C15 /* CoreBrightness.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBrightness.framework; path = ../../../System/Library/PrivateFrameworks/CoreBrightness.framework; sourceTree = "<group>"; };
+		F8A8C8E8201F98CF00F49C15 /* ColorTemperatureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorTemperatureViewController.h; sourceTree = "<group>"; };
+		F8A8C8E9201F98CF00F49C15 /* ColorTemperatureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorTemperatureViewController.m; sourceTree = "<group>"; };
+		F8A8C8EA201F98CF00F49C15 /* ColorTemperatureViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorTemperatureViewController.xib; sourceTree = "<group>"; };
+		F8DB0B57201DE52F00991F83 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = SOURCE_ROOT; };
+		F8DB0B5E201DEAF300991F83 /* SettingsWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
+		F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
+		F8DB0B60201DEAF300991F83 /* SettingsWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsWindowController.xib; sourceTree = "<group>"; };
+		F8DB0B65201E008200991F83 /* BrightnessViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrightnessViewController.h; sourceTree = "<group>"; };
+		F8DB0B66201E008200991F83 /* BrightnessViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrightnessViewController.m; sourceTree = "<group>"; };
+		F8DB0B67201E008200991F83 /* BrightnessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrightnessViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A8C8E7201F925800F49C15 /* CoreBrightness.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +65,7 @@
 			children = (
 				9DBE374E1DB7990900ABE422 /* NativeDisplayBrightness */,
 				9DBE374D1DB7990900ABE422 /* Products */,
+				F8A8C8E5201F925800F49C15 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,19 +80,10 @@
 		9DBE374E1DB7990900ABE422 /* NativeDisplayBrightness */ = {
 			isa = PBXGroup;
 			children = (
-				9DBE374F1DB7990900ABE422 /* AppDelegate.h */,
-				9DBE37501DB7990900ABE422 /* AppDelegate.m */,
-				9DBE37551DB7990900ABE422 /* Assets.xcassets */,
-				9DBE37571DB7990900ABE422 /* MainMenu.xib */,
-				9DBE375A1DB7990900ABE422 /* Info.plist */,
-				9DBE37601DB7996100ABE422 /* DDC.m */,
-				9DBE37641DB7A87200ABE422 /* Readme.md */,
-				9DBE37661DB7A9D600ABE422 /* License.txt */,
-				9DBE37611DB7996100ABE422 /* DDC.h */,
+				F8DB0B54201DE41300991F83 /* Info */,
+				F8DB0B56201DE44A00991F83 /* Classes */,
+				F8DB0B55201DE43A00991F83 /* Resources */,
 				9DBE37521DB7990900ABE422 /* Supporting Files */,
-				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
-				9D1F75421DBD44310039345A /* OSD.h */,
-				9D1F75431DBD48310039345A /* CoreGraphicsPriv.h */,
 			);
 			path = NativeDisplayBrightness;
 			sourceTree = "<group>";
@@ -81,9 +91,59 @@
 		9DBE37521DB7990900ABE422 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9DBE375A1DB7990900ABE422 /* Info.plist */,
 				9DBE37531DB7990900ABE422 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F8A8C8E5201F925800F49C15 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F8A8C8E6201F925800F49C15 /* CoreBrightness.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F8DB0B54201DE41300991F83 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				F8DB0B57201DE52F00991F83 /* Readme.md */,
+				9DBE37661DB7A9D600ABE422 /* License.txt */,
+			);
+			name = Info;
+			sourceTree = "<group>";
+		};
+		F8DB0B55201DE43A00991F83 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9DBE37551DB7990900ABE422 /* Assets.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F8DB0B56201DE44A00991F83 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F8A8C8E4201F7F1600F49C15 /* Config.h */,
+				9DBE374F1DB7990900ABE422 /* AppDelegate.h */,
+				9DBE37501DB7990900ABE422 /* AppDelegate.m */,
+				9DBE37601DB7996100ABE422 /* DDC.c */,
+				9DBE37611DB7996100ABE422 /* DDC.h */,
+				9DBE37631DB79A4000ABE422 /* BezelServices.h */,
+				9D1F75421DBD44310039345A /* OSD.h */,
+				F8197A22201E818A0006516C /* CBBlueLightClient.h */,
+				F8DB0B5E201DEAF300991F83 /* SettingsWindowController.h */,
+				F8DB0B5F201DEAF300991F83 /* SettingsWindowController.m */,
+				F8DB0B60201DEAF300991F83 /* SettingsWindowController.xib */,
+				F8DB0B65201E008200991F83 /* BrightnessViewController.h */,
+				F8DB0B66201E008200991F83 /* BrightnessViewController.m */,
+				F8DB0B67201E008200991F83 /* BrightnessViewController.xib */,
+				F8A8C8E8201F98CF00F49C15 /* ColorTemperatureViewController.h */,
+				F8A8C8E9201F98CF00F49C15 /* ColorTemperatureViewController.m */,
+				F8A8C8EA201F98CF00F49C15 /* ColorTemperatureViewController.xib */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,8 +172,8 @@
 		9DBE37441DB7990900ABE422 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = "Benno Krauss";
+				LastUpgradeCheck = 1330;
+				ORGANIZATIONNAME = "Volodymyr Klymenko";
 				TargetAttributes = {
 					9DBE374B1DB7990900ABE422 = {
 						CreatedOnToolsVersion = 8.0;
@@ -122,8 +182,8 @@
 				};
 			};
 			buildConfigurationList = 9DBE37471DB7990900ABE422 /* Build configuration list for PBXProject "NativeDisplayBrightness" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -144,8 +204,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A8C8EC201F98CF00F49C15 /* ColorTemperatureViewController.xib in Resources */,
+				F8DB0B58201DE52F00991F83 /* Readme.md in Resources */,
+				F8DB0B69201E008200991F83 /* BrightnessViewController.xib in Resources */,
+				F8DB0B62201DEAF300991F83 /* SettingsWindowController.xib in Resources */,
 				9DBE37561DB7990900ABE422 /* Assets.xcassets in Resources */,
-				9DBE37591DB7990900ABE422 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,24 +219,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DBE37621DB7996100ABE422 /* DDC.m in Sources */,
+				9DBE37621DB7996100ABE422 /* DDC.c in Sources */,
+				F8DB0B68201E008200991F83 /* BrightnessViewController.m in Sources */,
+				F8A8C8EB201F98CF00F49C15 /* ColorTemperatureViewController.m in Sources */,
 				9DBE37541DB7990900ABE422 /* main.m in Sources */,
+				F8DB0B61201DEAF300991F83 /* SettingsWindowController.m in Sources */,
 				9DBE37511DB7990900ABE422 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		9DBE37571DB7990900ABE422 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9DBE37581DB7990900ABE422 /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9DBE375B1DB7990900ABE422 /* Debug */ = {
@@ -267,9 +322,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = L3UA46DS39;
+				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = NativeDisplayBrightness/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12.4;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bensge.NativeDisplayBrightness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -279,9 +345,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = L3UA46DS39;
+				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = NativeDisplayBrightness/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12.4;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bensge.NativeDisplayBrightness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
